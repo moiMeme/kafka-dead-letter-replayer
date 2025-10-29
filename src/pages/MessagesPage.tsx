@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MessageTable } from '../components/MessageTable';
 import { MessageDetailDrawer } from '../components/MessageDetailDrawer';
 import { FiltersPanel } from '../components/FiltersPanel';
@@ -13,95 +13,51 @@ export default function MessagesPage() {
   const dltApi = useDltApi();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(20);
-  const [allMessages, setAllMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [totalMessages, setTotalMessages] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const { selectedService, selectedTopic, filters, selectedMessages, clearSelection, setReplayDialogOpen } = useDltStore();
 
+  // Fetch messages whenever page or filters change
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         setLoading(true);
-        const data = await dltApi.getMessages();
-        setAllMessages(data);
+        const response = await dltApi.getMessages({
+          page: currentPage,
+          pageSize,
+          serviceId: selectedService || undefined,
+          topic: selectedTopic || undefined,
+          errorType: filters.errorType || undefined,
+          search: filters.search || undefined,
+          searchByKey: filters.searchByKey || undefined,
+          searchByValue: filters.searchByValue || undefined,
+          headerKey: filters.headerKey || undefined,
+          headerValue: filters.headerValue || undefined,
+          dateFrom: filters.dateFrom || undefined,
+          dateTo: filters.dateTo || undefined,
+        });
+        setMessages(response.data);
+        setTotalMessages(response.total);
+        setTotalPages(response.totalPages);
       } catch (error) {
         console.error('Failed to fetch messages:', error);
+        setMessages([]);
+        setTotalMessages(0);
+        setTotalPages(0);
       } finally {
         setLoading(false);
       }
     };
 
     fetchMessages();
-  }, [dltApi]);
+  }, [dltApi, currentPage, pageSize, selectedService, selectedTopic, filters]);
 
-  const filteredMessages = useMemo(() => {
-    let filtered = [...allMessages];
-
-    if (selectedService) {
-      filtered = filtered.filter(m => m.serviceId === selectedService);
-    }
-
-    if (selectedTopic) {
-      filtered = filtered.filter(m => m.topic === selectedTopic);
-    }
-
-    if (filters.errorType) {
-      filtered = filtered.filter(m => m.errorType === filters.errorType);
-    }
-
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase();
-      filtered = filtered.filter(m =>
-        m.key.toLowerCase().includes(searchLower) ||
-        m.topic.toLowerCase().includes(searchLower) ||
-        JSON.stringify(m.payload).toLowerCase().includes(searchLower)
-      );
-    }
-
-    if (filters.searchByKey) {
-      const keyLower = filters.searchByKey.toLowerCase();
-      filtered = filtered.filter(m => m.key.toLowerCase().includes(keyLower));
-    }
-
-    if (filters.searchByValue) {
-      const valueLower = filters.searchByValue.toLowerCase();
-      filtered = filtered.filter(m =>
-        JSON.stringify(m.payload).toLowerCase().includes(valueLower)
-      );
-    }
-
-    if (filters.headerKey) {
-      const headerKeyLower = filters.headerKey.toLowerCase();
-      filtered = filtered.filter(m =>
-        Object.keys(m.headers).some(key => key.toLowerCase().includes(headerKeyLower))
-      );
-    }
-
-    if (filters.headerValue) {
-      const headerValLower = filters.headerValue.toLowerCase();
-      filtered = filtered.filter(m =>
-        Object.values(m.headers).some(val =>
-          String(val).toLowerCase().includes(headerValLower)
-        )
-      );
-    }
-
-    if (filters.dateFrom) {
-      filtered = filtered.filter(m => new Date(m.timestamp) >= new Date(filters.dateFrom));
-    }
-
-    if (filters.dateTo) {
-      filtered = filtered.filter(m => new Date(m.timestamp) <= new Date(filters.dateTo));
-    }
-
-    return filtered;
-  }, [allMessages, selectedService, selectedTopic, filters]);
-
-  const paginatedMessages = useMemo(() => {
-    const startIndex = (currentPage - 1) * pageSize;
-    return filteredMessages.slice(startIndex, startIndex + pageSize);
-  }, [filteredMessages, currentPage, pageSize]);
-
-  const totalPages = Math.ceil(filteredMessages.length / pageSize);
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedService, selectedTopic, filters]);
 
   if (loading) {
     return (
@@ -154,11 +110,11 @@ export default function MessagesPage() {
         
         <div className="space-y-4">
           <MessageTable
-            messages={paginatedMessages}
+            messages={messages}
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={setCurrentPage}
-            totalMessages={filteredMessages.length}
+            totalMessages={totalMessages}
           />
         </div>
       </div>

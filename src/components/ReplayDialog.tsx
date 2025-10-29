@@ -1,33 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import useDltStore from '../store/useDltStore';
+import { useDltApi } from '../hooks/useDltApi';
+import type { Message } from '@/types';
 import { toast } from '../hooks/use-toast';
 import { Play, X } from 'lucide-react';
-import { mockMessages } from '../data/mock';
 
 export function ReplayDialog() {
+  const dltApi = useDltApi();
   const { replayDialogOpen, setReplayDialogOpen, selectedMessages, clearSelection } = useDltStore();
   const [isReplaying, setIsReplaying] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const messages = mockMessages.filter(m => selectedMessages.includes(m.id));
+  // Fetch message details when dialog opens
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (replayDialogOpen && selectedMessages.length > 0) {
+        setLoading(true);
+        try {
+          const messagePromises = selectedMessages.map(id => dltApi.getMessage(id));
+          const messagesData = await Promise.all(messagePromises);
+          setMessages(messagesData);
+        } catch (error) {
+          console.error('Failed to fetch messages:', error);
+          setMessages([]);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchMessages();
+  }, [replayDialogOpen, selectedMessages, dltApi]);
 
   const handleReplay = async () => {
     setIsReplaying(true);
-    
-    // Simulate API call - API will save the history
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    toast({
-      title: 'Replay initiated',
-      description: `${selectedMessages.length} message${selectedMessages.length > 1 ? 's' : ''} replayed successfully. History saved by API.`,
-      variant: 'default'
-    });
-    
-    setIsReplaying(false);
-    setReplayDialogOpen(false);
-    clearSelection();
+
+    try {
+      // Call the API to replay messages
+      await dltApi.replayMessages(selectedMessages);
+
+      toast({
+        title: 'Replay initiated',
+        description: `${selectedMessages.length} message${selectedMessages.length > 1 ? 's' : ''} replayed successfully. History saved by API.`,
+        variant: 'default'
+      });
+
+      setReplayDialogOpen(false);
+      clearSelection();
+    } catch (error) {
+      console.error('Failed to replay messages:', error);
+      toast({
+        title: 'Replay failed',
+        description: 'Failed to replay messages. Please try again.',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsReplaying(false);
+    }
   };
 
   const handleClose = () => {
@@ -47,8 +80,13 @@ export function ReplayDialog() {
         <div className="space-y-4 py-4">
           <div className="space-y-2">
             <Label className="text-slate-700 dark:text-slate-300">Selected Messages ({messages.length})</Label>
-            <div className="max-h-60 overflow-y-auto space-y-2">
-              {messages.map((message) => (
+            {loading ? (
+              <div className="text-center py-8 text-slate-500 dark:text-slate-400">
+                Loading messages...
+              </div>
+            ) : (
+              <div className="max-h-60 overflow-y-auto space-y-2">
+                {messages.map((message) => (
                 <div
                   key={message.id}
                   className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800"
@@ -59,7 +97,8 @@ export function ReplayDialog() {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+            )}
           </div>
         </div>
 

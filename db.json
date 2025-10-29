@@ -3636,4 +3636,12 @@
       }
     ]
   }
+,
+  "errorTypes": [
+    {"id": 1, "name": "DeserializationException"},
+    {"id": 2, "name": "ValidationException"},
+    {"id": 3, "name": "TimeoutException"},
+    {"id": 4, "name": "ServiceUnavailableException"},
+    {"id": 5, "name": "UnknownException"}
+  ]
 }

@@ -1,25 +1,66 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
-import { mockServices, mockTopics, errorTypes } from '../data/mock';
 import useDltStore from '../store/useDltStore';
+import { useDltApi } from '../hooks/useDltApi';
+import type { Service, Topic } from '@/types';
 import { Filter, X } from 'lucide-react';
 
 export function FiltersPanel() {
-  const { 
-    selectedService, 
-    setSelectedService, 
-    selectedTopic, 
+  const dltApi = useDltApi();
+  const {
+    selectedService,
+    setSelectedService,
+    selectedTopic,
     setSelectedTopic,
     filters,
     setFilters,
     resetFilters
   } = useDltStore();
 
-  const availableTopics = selectedService ? mockTopics[selectedService] || [] : [];
+  const [services, setServices] = useState<Service[]>([]);
+  const [topics, setTopics] = useState<Topic[]>([]);
+  const [errorTypes, setErrorTypes] = useState<string[]>([]);
+
+  // Fetch services and error types on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [servicesData, errorTypesData] = await Promise.all([
+          dltApi.getServices(),
+          dltApi.getErrorTypes()
+        ]);
+        setServices(servicesData);
+        setErrorTypes(errorTypesData);
+      } catch (error) {
+        console.error('Failed to fetch filter data:', error);
+      }
+    };
+
+    fetchData();
+  }, [dltApi]);
+
+  // Fetch topics when service changes
+  useEffect(() => {
+    const fetchTopics = async () => {
+      if (selectedService) {
+        try {
+          const topicsData = await dltApi.getTopics(selectedService);
+          setTopics(topicsData);
+        } catch (error) {
+          console.error('Failed to fetch topics:', error);
+          setTopics([]);
+        }
+      } else {
+        setTopics([]);
+      }
+    };
+
+    fetchTopics();
+  }, [selectedService, dltApi]);
 
   const hasActiveFilters = selectedService || selectedTopic || filters.errorType || filters.search || filters.dateFrom || filters.dateTo || filters.searchByKey || filters.searchByValue || filters.headerKey || filters.headerValue;
 
@@ -59,7 +100,7 @@ export function FiltersPanel() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All services</SelectItem>
-              {mockServices.map((service) => (
+              {services.map((service) => (
                 <SelectItem key={service.id} value={service.id}>
                   {service.name}
                 </SelectItem>
@@ -80,7 +121,7 @@ export function FiltersPanel() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All topics</SelectItem>
-              {availableTopics.map((topic) => (
+              {topics.map((topic) => (
                 <SelectItem key={topic.name} value={topic.name}>
                   {topic.name}
                 </SelectItem>

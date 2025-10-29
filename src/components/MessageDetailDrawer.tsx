@@ -7,7 +7,8 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import useDltStore from '../store/useDltStore';
-import { mockReplayHistory } from '../data/mock';
+import { useDltApi } from '../hooks/useDltApi';
+import type { ReplayHistoryItem } from '@/types';
 import { Play, FileJson, FileText, History as HistoryIcon, Plus, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import Editor from '@monaco-editor/react';
@@ -23,20 +24,37 @@ const errorTypeColors = {
 
 export function MessageDetailDrawer() {
   const { theme } = useTheme();
+  const dltApi = useDltApi();
   const { selectedMessage, drawerOpen, setDrawerOpen, setReplayDialogOpen, setSelectedMessages } = useDltStore();
   const [editedPayload, setEditedPayload] = useState('');
   const [editedHeaders, setEditedHeaders] = useState<Record<string, string>>({});
   const [newHeaderKey, setNewHeaderKey] = useState('');
   const [newHeaderValue, setNewHeaderValue] = useState('');
-  const [replayHistory, setReplayHistory] = useState([]);
+  const [replayHistory, setReplayHistory] = useState<ReplayHistoryItem[]>([]);
+  const [loadingHistory, setLoadingHistory] = useState(false);
 
   useEffect(() => {
-    if (selectedMessage) {
-      setEditedPayload(JSON.stringify(selectedMessage.payload, null, 2));
-      setEditedHeaders({ ...selectedMessage.headers });
-      setReplayHistory(mockReplayHistory(selectedMessage.id));
-    }
-  }, [selectedMessage]);
+    const fetchReplayHistory = async () => {
+      if (selectedMessage) {
+        setEditedPayload(JSON.stringify(selectedMessage.payload, null, 2));
+        setEditedHeaders({ ...selectedMessage.headers });
+
+        // Fetch replay history from API
+        setLoadingHistory(true);
+        try {
+          const history = await dltApi.getReplayHistory(selectedMessage.id);
+          setReplayHistory(history);
+        } catch (error) {
+          console.error('Failed to fetch replay history:', error);
+          setReplayHistory([]);
+        } finally {
+          setLoadingHistory(false);
+        }
+      }
+    };
+
+    fetchReplayHistory();
+  }, [selectedMessage, dltApi]);
 
   if (!selectedMessage) return null;
 

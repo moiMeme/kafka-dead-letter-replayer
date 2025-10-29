@@ -1,0 +1,187 @@
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { Button } from './ui/button';
+import { mockServices, mockTopics, errorTypes } from '../data/mock';
+import useDltStore from '../store/useDltStore';
+import { Filter, X } from 'lucide-react';
+
+export function FiltersPanel() {
+  const { 
+    selectedService, 
+    setSelectedService, 
+    selectedTopic, 
+    setSelectedTopic,
+    filters,
+    setFilters,
+    resetFilters
+  } = useDltStore();
+
+  const availableTopics = selectedService ? mockTopics[selectedService] || [] : [];
+
+  const hasActiveFilters = selectedService || selectedTopic || filters.errorType || filters.search || filters.dateFrom || filters.dateTo || filters.searchByKey || filters.searchByValue || filters.headerKey || filters.headerValue;
+
+  const handleReset = () => {
+    setSelectedService(null);
+    setSelectedTopic(null);
+    resetFilters();
+  };
+
+  return (
+    <Card className="border-slate-200 dark:border-slate-800 h-fit sticky top-20">
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2 text-slate-900 dark:text-white">
+            <Filter className="h-5 w-5" />
+            Filters
+          </CardTitle>
+          {hasActiveFilters && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleReset}
+              className="text-xs text-slate-600 dark:text-slate-400"
+            >
+              <X className="h-3 w-3 mr-1" />
+              Reset
+            </Button>
+          )}
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="space-y-2">
+          <Label className="text-slate-700 dark:text-slate-300">Service</Label>
+          <Select value={selectedService || 'all'} onValueChange={(value) => setSelectedService(value === 'all' ? null : value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="All services" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All services</SelectItem>
+              {mockServices.map((service) => (
+                <SelectItem key={service.id} value={service.id}>
+                  {service.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-slate-700 dark:text-slate-300">Topic</Label>
+          <Select 
+            value={selectedTopic || 'all'} 
+            onValueChange={(value) => setSelectedTopic(value === 'all' ? null : value)}
+            disabled={!selectedService}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder={selectedService ? 'All topics' : 'Select service first'} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All topics</SelectItem>
+              {availableTopics.map((topic) => (
+                <SelectItem key={topic.name} value={topic.name}>
+                  {topic.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-slate-700 dark:text-slate-300">Error Type</Label>
+          <Select value={filters.errorType || 'all'} onValueChange={(value) => setFilters({ errorType: value === 'all' ? '' : value })}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="All error types" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All error types</SelectItem>
+              {errorTypes.map((errorType) => (
+                <SelectItem key={errorType} value={errorType}>
+                  {errorType}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-slate-700 dark:text-slate-300">Search</Label>
+          <Input
+            placeholder="Search messages..."
+            value={filters.search}
+            onChange={(e) => setFilters({ search: e.target.value })}
+            className="w-full"
+          />
+        </div>
+
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-4 mt-4">
+          <Label className="text-slate-700 dark:text-slate-300 mb-3 block font-semibold">Advanced Search</Label>
+          
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label className="text-slate-700 dark:text-slate-300 text-sm">Search by Key</Label>
+              <Input
+                placeholder="Search by message key..."
+                value={filters.searchByKey}
+                onChange={(e) => setFilters({ searchByKey: e.target.value })}
+                className="w-full"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-slate-700 dark:text-slate-300 text-sm">Search by Value</Label>
+              <Input
+                placeholder="Search in message content..."
+                value={filters.searchByValue}
+                onChange={(e) => setFilters({ searchByValue: e.target.value })}
+                className="w-full"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-slate-700 dark:text-slate-300 text-sm">Header Key</Label>
+              <Input
+                placeholder="e.g., correlation-id"
+                value={filters.headerKey}
+                onChange={(e) => setFilters({ headerKey: e.target.value })}
+                className="w-full"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-slate-700 dark:text-slate-300 text-sm">Header Value</Label>
+              <Input
+                placeholder="Search header value..."
+                value={filters.headerValue}
+                onChange={(e) => setFilters({ headerValue: e.target.value })}
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-slate-700 dark:text-slate-300">Date From</Label>
+          <Input
+            type="date"
+            value={filters.dateFrom}
+            onChange={(e) => setFilters({ dateFrom: e.target.value })}
+            className="w-full"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-slate-700 dark:text-slate-300">Date To</Label>
+          <Input
+            type="date"
+            value={filters.dateTo}
+            onChange={(e) => setFilters({ dateTo: e.target.value })}
+            className="w-full"
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

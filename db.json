@@ -1,0 +1,3639 @@
+{
+  "services": [
+    {
+      "id": "payment-service",
+      "name": "Payment Service"
+    },
+    {
+      "id": "order-service",
+      "name": "Order Service"
+    },
+    {
+      "id": "notification-service",
+      "name": "Notification Service"
+    },
+    {
+      "id": "inventory-service",
+      "name": "Inventory Service"
+    },
+    {
+      "id": "user-service",
+      "name": "User Service"
+    }
+  ],
+  "topics": [
+    {
+      "name": "payment.created",
+      "serviceId": "payment-service"
+    },
+    {
+      "name": "payment.failed",
+      "serviceId": "payment-service"
+    },
+    {
+      "name": "payment.refunded",
+      "serviceId": "payment-service"
+    },
+    {
+      "name": "order.created",
+      "serviceId": "order-service"
+    },
+    {
+      "name": "order.cancelled",
+      "serviceId": "order-service"
+    },
+    {
+      "name": "order.completed",
+      "serviceId": "order-service"
+    },
+    {
+      "name": "notification.email.failed",
+      "serviceId": "notification-service"
+    },
+    {
+      "name": "notification.sms.failed",
+      "serviceId": "notification-service"
+    },
+    {
+      "name": "inventory.updated",
+      "serviceId": "inventory-service"
+    },
+    {
+      "name": "inventory.low-stock",
+      "serviceId": "inventory-service"
+    },
+    {
+      "name": "user.created",
+      "serviceId": "user-service"
+    },
+    {
+      "name": "user.updated",
+      "serviceId": "user-service"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-24",
+      "key": "notification-ORD-7923",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-28T09:10:29.158Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T11:17:53.540Z",
+      "headers": {
+        "correlation-id": "corr-k245vcfrm",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7923",
+        "userId": "USR-934",
+        "amount": 528,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:235)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:38)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:27)"
+    },
+    {
+      "id": "msg-97",
+      "key": "inventory-ORD-6541",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-28T08:59:38.795Z",
+      "errorType": "UnknownException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T15:35:44.623Z",
+      "headers": {
+        "correlation-id": "corr-jxw6lmd4x",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6541",
+        "userId": "USR-27",
+        "amount": 731,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:223)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:75)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:94)"
+    },
+    {
+      "id": "msg-118",
+      "key": "user-ORD-886",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-28T07:47:22.340Z",
+      "errorType": "TimeoutException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T10:57:58.234Z",
+      "headers": {
+        "correlation-id": "corr-q6dfvpktf",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-886",
+        "userId": "USR-265",
+        "amount": 554,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:233)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:175)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:42)"
+    },
+    {
+      "id": "msg-120",
+      "key": "notification-ORD-6506",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-28T07:39:43.523Z",
+      "errorType": "DeserializationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-26T19:55:07.826Z",
+      "headers": {
+        "correlation-id": "corr-h6pvhyio0",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6506",
+        "userId": "USR-362",
+        "amount": 535,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:153)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:50)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:26)"
+    },
+    {
+      "id": "msg-94",
+      "key": "user-ORD-842",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-28T07:15:42.697Z",
+      "errorType": "UnknownException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-9p08ujz73",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-842",
+        "userId": "USR-168",
+        "amount": 928,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:68)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:119)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:52)"
+    },
+    {
+      "id": "msg-38",
+      "key": "order-ORD-4708",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-28T06:59:57.283Z",
+      "errorType": "TimeoutException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T00:49:38.366Z",
+      "headers": {
+        "correlation-id": "corr-lmb4mvxo0",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4708",
+        "userId": "USR-167",
+        "amount": 237,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:99)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:118)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:64)"
+    },
+    {
+      "id": "msg-69",
+      "key": "order-ORD-8889",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-28T03:52:29.078Z",
+      "errorType": "DeserializationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T02:21:33.348Z",
+      "headers": {
+        "correlation-id": "corr-qka8zqbw2",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8889",
+        "userId": "USR-556",
+        "amount": 641,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:249)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:37)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:27)"
+    },
+    {
+      "id": "msg-68",
+      "key": "order-ORD-6632",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-28T02:10:27.854Z",
+      "errorType": "DeserializationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-26T11:57:31.522Z",
+      "headers": {
+        "correlation-id": "corr-3cvsd4r2l",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6632",
+        "userId": "USR-919",
+        "amount": 588,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:155)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:174)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:79)"
+    },
+    {
+      "id": "msg-137",
+      "key": "payment-ORD-2525",
+      "serviceId": "payment-service",
+      "topic": "payment.refunded",
+      "timestamp": "2025-10-28T00:26:48.325Z",
+      "errorType": "TimeoutException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-28T00:22:00.850Z",
+      "headers": {
+        "correlation-id": "corr-57yffhjk3",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2525",
+        "userId": "USR-91",
+        "amount": 389,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:80)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:136)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:84)"
+    },
+    {
+      "id": "msg-35",
+      "key": "inventory-ORD-6532",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-27T20:51:44.311Z",
+      "errorType": "ValidationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T13:02:43.554Z",
+      "headers": {
+        "correlation-id": "corr-pic4igikd",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6532",
+        "userId": "USR-838",
+        "amount": 294,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:223)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:141)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:67)"
+    },
+    {
+      "id": "msg-150",
+      "key": "inventory-ORD-6965",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-27T19:54:07.055Z",
+      "errorType": "UnknownException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-28T08:29:19.983Z",
+      "headers": {
+        "correlation-id": "corr-zjwokjjwb",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6965",
+        "userId": "USR-224",
+        "amount": 456,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:51)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:137)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:117)"
+    },
+    {
+      "id": "msg-74",
+      "key": "payment-ORD-1023",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-27T19:26:26.505Z",
+      "errorType": "ValidationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-bwo91j4s0",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1023",
+        "userId": "USR-493",
+        "amount": 818,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:244)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:147)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:51)"
+    },
+    {
+      "id": "msg-63",
+      "key": "order-ORD-4899",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-27T18:39:38.294Z",
+      "errorType": "UnknownException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-28T07:35:53.856Z",
+      "headers": {
+        "correlation-id": "corr-fmpzbtewx",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4899",
+        "userId": "USR-979",
+        "amount": 63,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:150)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:88)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:73)"
+    },
+    {
+      "id": "msg-10",
+      "key": "payment-ORD-1080",
+      "serviceId": "payment-service",
+      "topic": "payment.failed",
+      "timestamp": "2025-10-27T17:39:32.768Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T12:47:02.535Z",
+      "headers": {
+        "correlation-id": "corr-ugye69qwj",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1080",
+        "userId": "USR-370",
+        "amount": 177,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:182)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:84)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:33)"
+    },
+    {
+      "id": "msg-125",
+      "key": "payment-ORD-3458",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-27T17:11:06.321Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-3wyrtwjgs",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3458",
+        "userId": "USR-629",
+        "amount": 120,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:155)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:53)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:96)"
+    },
+    {
+      "id": "msg-1",
+      "key": "notification-ORD-9698",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-27T16:39:56.415Z",
+      "errorType": "UnknownException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T20:56:47.700Z",
+      "headers": {
+        "correlation-id": "corr-0hqgv6ltz",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-9698",
+        "userId": "USR-305",
+        "amount": 78,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:64)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:62)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:58)"
+    },
+    {
+      "id": "msg-59",
+      "key": "user-ORD-7673",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-27T16:36:06.920Z",
+      "errorType": "TimeoutException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T17:46:34.419Z",
+      "headers": {
+        "correlation-id": "corr-nvru7qgeq",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7673",
+        "userId": "USR-129",
+        "amount": 899,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:247)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:108)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:63)"
+    },
+    {
+      "id": "msg-40",
+      "key": "user-ORD-787",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-27T14:47:38.015Z",
+      "errorType": "DeserializationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-26T19:15:05.268Z",
+      "headers": {
+        "correlation-id": "corr-v92g55d7g",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-787",
+        "userId": "USR-206",
+        "amount": 150,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:170)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:119)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:109)"
+    },
+    {
+      "id": "msg-6",
+      "key": "inventory-ORD-8001",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-27T14:12:15.983Z",
+      "errorType": "ValidationException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T19:58:18.879Z",
+      "headers": {
+        "correlation-id": "corr-nv2zwfxe5",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8001",
+        "userId": "USR-637",
+        "amount": 605,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:137)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:98)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:74)"
+    },
+    {
+      "id": "msg-45",
+      "key": "inventory-ORD-7981",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-27T12:37:14.550Z",
+      "errorType": "DeserializationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T08:28:54.926Z",
+      "headers": {
+        "correlation-id": "corr-xwo7nb8gz",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7981",
+        "userId": "USR-977",
+        "amount": 791,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:69)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:33)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:95)"
+    },
+    {
+      "id": "msg-104",
+      "key": "user-ORD-7694",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-27T12:35:35.309Z",
+      "errorType": "DeserializationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-28T03:55:16.366Z",
+      "headers": {
+        "correlation-id": "corr-78ohltmtn",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7694",
+        "userId": "USR-220",
+        "amount": 745,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:50)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:89)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:27)"
+    },
+    {
+      "id": "msg-148",
+      "key": "order-ORD-6744",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-27T11:56:34.807Z",
+      "errorType": "DeserializationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-26T11:03:23.024Z",
+      "headers": {
+        "correlation-id": "corr-vtp24wux2",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6744",
+        "userId": "USR-491",
+        "amount": 85,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:96)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:98)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:51)"
+    },
+    {
+      "id": "msg-56",
+      "key": "order-ORD-6585",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-27T11:38:22.098Z",
+      "errorType": "ValidationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-28T02:18:05.241Z",
+      "headers": {
+        "correlation-id": "corr-dicpqd27c",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6585",
+        "userId": "USR-859",
+        "amount": 1017,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:86)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:134)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:87)"
+    },
+    {
+      "id": "msg-85",
+      "key": "notification-ORD-2466",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-27T11:21:11.170Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T17:41:09.027Z",
+      "headers": {
+        "correlation-id": "corr-bsgsl7bv9",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2466",
+        "userId": "USR-778",
+        "amount": 373,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:110)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:136)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:28)"
+    },
+    {
+      "id": "msg-100",
+      "key": "order-ORD-8746",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-27T10:17:49.149Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-26T21:41:39.791Z",
+      "headers": {
+        "correlation-id": "corr-y2obif62z",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8746",
+        "userId": "USR-79",
+        "amount": 852,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:194)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:65)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:90)"
+    },
+    {
+      "id": "msg-13",
+      "key": "payment-ORD-6366",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-27T09:56:20.952Z",
+      "errorType": "DeserializationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T08:29:23.291Z",
+      "headers": {
+        "correlation-id": "corr-6p96uq7ow",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6366",
+        "userId": "USR-537",
+        "amount": 799,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:177)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:59)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:50)"
+    },
+    {
+      "id": "msg-102",
+      "key": "payment-ORD-5075",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-27T09:20:48.269Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-26T23:46:49.110Z",
+      "headers": {
+        "correlation-id": "corr-nrsar2i3i",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5075",
+        "userId": "USR-34",
+        "amount": 125,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:216)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:156)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:97)"
+    },
+    {
+      "id": "msg-98",
+      "key": "notification-ORD-514",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-27T09:17:29.657Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-26T22:32:32.341Z",
+      "headers": {
+        "correlation-id": "corr-fu3gane6r",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-514",
+        "userId": "USR-654",
+        "amount": 706,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:191)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:36)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:57)"
+    },
+    {
+      "id": "msg-80",
+      "key": "inventory-ORD-4058",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-27T07:13:25.392Z",
+      "errorType": "UnknownException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-tcdjjvrju",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4058",
+        "userId": "USR-630",
+        "amount": 80,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:218)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:103)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:89)"
+    },
+    {
+      "id": "msg-34",
+      "key": "order-ORD-2365",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-27T06:58:21.828Z",
+      "errorType": "DeserializationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T18:24:29.918Z",
+      "headers": {
+        "correlation-id": "corr-jlsi1bfan",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2365",
+        "userId": "USR-477",
+        "amount": 898,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:142)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:99)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:103)"
+    },
+    {
+      "id": "msg-22",
+      "key": "order-ORD-5633",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-27T06:55:34.389Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T01:03:57.097Z",
+      "headers": {
+        "correlation-id": "corr-0cs09i2xp",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5633",
+        "userId": "USR-486",
+        "amount": 551,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:99)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:57)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:88)"
+    },
+    {
+      "id": "msg-8",
+      "key": "notification-ORD-8061",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-27T06:15:15.011Z",
+      "errorType": "TimeoutException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-28T03:33:44.653Z",
+      "headers": {
+        "correlation-id": "corr-po9bshv49",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8061",
+        "userId": "USR-601",
+        "amount": 1012,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:199)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:156)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:20)"
+    },
+    {
+      "id": "msg-121",
+      "key": "order-ORD-3088",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-27T06:10:13.699Z",
+      "errorType": "TimeoutException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-26T16:37:19.942Z",
+      "headers": {
+        "correlation-id": "corr-pc9n2qt9a",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3088",
+        "userId": "USR-40",
+        "amount": 989,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:114)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:109)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:92)"
+    },
+    {
+      "id": "msg-31",
+      "key": "notification-ORD-7629",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-27T05:57:25.734Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-a4o4c6r8t",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7629",
+        "userId": "USR-970",
+        "amount": 50,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:225)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:83)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:69)"
+    },
+    {
+      "id": "msg-51",
+      "key": "order-ORD-9005",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-27T04:31:15.434Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T19:19:32.313Z",
+      "headers": {
+        "correlation-id": "corr-aa8nckw94",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-9005",
+        "userId": "USR-392",
+        "amount": 1023,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:152)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:128)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:40)"
+    },
+    {
+      "id": "msg-130",
+      "key": "order-ORD-4588",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-27T04:20:22.631Z",
+      "errorType": "TimeoutException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-2an11191o",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4588",
+        "userId": "USR-303",
+        "amount": 437,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:111)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:44)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:37)"
+    },
+    {
+      "id": "msg-143",
+      "key": "notification-ORD-8577",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-27T01:49:47.707Z",
+      "errorType": "DeserializationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-c9jd8q5r8",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8577",
+        "userId": "USR-654",
+        "amount": 134,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:138)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:50)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:101)"
+    },
+    {
+      "id": "msg-114",
+      "key": "user-ORD-3320",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-27T01:27:02.116Z",
+      "errorType": "ValidationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T00:19:41.712Z",
+      "headers": {
+        "correlation-id": "corr-5gr414clh",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3320",
+        "userId": "USR-357",
+        "amount": 127,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:173)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:51)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:22)"
+    },
+    {
+      "id": "msg-86",
+      "key": "user-ORD-6120",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-26T22:43:28.197Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-cnrab4vpz",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6120",
+        "userId": "USR-334",
+        "amount": 217,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:224)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:125)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:116)"
+    },
+    {
+      "id": "msg-91",
+      "key": "order-ORD-1209",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-26T20:38:27.008Z",
+      "errorType": "ValidationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-3vwvhlgdr",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1209",
+        "userId": "USR-855",
+        "amount": 446,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:70)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:45)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:82)"
+    },
+    {
+      "id": "msg-76",
+      "key": "inventory-ORD-4138",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-26T18:43:52.842Z",
+      "errorType": "TimeoutException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T22:46:31.173Z",
+      "headers": {
+        "correlation-id": "corr-nvu11ow42",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4138",
+        "userId": "USR-765",
+        "amount": 1035,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:248)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:134)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:38)"
+    },
+    {
+      "id": "msg-87",
+      "key": "user-ORD-8703",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-26T13:05:59.924Z",
+      "errorType": "UnknownException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T18:31:37.523Z",
+      "headers": {
+        "correlation-id": "corr-uwbs92k42",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8703",
+        "userId": "USR-676",
+        "amount": 193,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:187)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:157)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:102)"
+    },
+    {
+      "id": "msg-62",
+      "key": "payment-ORD-4578",
+      "serviceId": "payment-service",
+      "topic": "payment.failed",
+      "timestamp": "2025-10-26T12:11:59.053Z",
+      "errorType": "DeserializationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-28T02:00:36.097Z",
+      "headers": {
+        "correlation-id": "corr-xx3yixqi0",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4578",
+        "userId": "USR-490",
+        "amount": 388,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:197)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:153)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:24)"
+    },
+    {
+      "id": "msg-65",
+      "key": "user-ORD-3998",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-26T07:24:02.555Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-dtau9bcbv",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3998",
+        "userId": "USR-714",
+        "amount": 406,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:192)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:175)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:27)"
+    },
+    {
+      "id": "msg-132",
+      "key": "user-ORD-371",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-26T06:26:11.131Z",
+      "errorType": "UnknownException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-yhwmughbq",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-371",
+        "userId": "USR-407",
+        "amount": 329,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:155)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:164)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:61)"
+    },
+    {
+      "id": "msg-54",
+      "key": "inventory-ORD-8940",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-26T06:16:13.295Z",
+      "errorType": "UnknownException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T17:38:59.044Z",
+      "headers": {
+        "correlation-id": "corr-gpm7uronw",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8940",
+        "userId": "USR-839",
+        "amount": 1033,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:154)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:133)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:58)"
+    },
+    {
+      "id": "msg-29",
+      "key": "payment-ORD-2308",
+      "serviceId": "payment-service",
+      "topic": "payment.failed",
+      "timestamp": "2025-10-26T05:27:00.330Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-26T11:12:04.753Z",
+      "headers": {
+        "correlation-id": "corr-s6z57fc74",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2308",
+        "userId": "USR-115",
+        "amount": 82,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:194)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:76)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:117)"
+    },
+    {
+      "id": "msg-60",
+      "key": "payment-ORD-7404",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-26T05:07:58.524Z",
+      "errorType": "ValidationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-owrj6a8cp",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7404",
+        "userId": "USR-694",
+        "amount": 468,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:246)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:109)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:35)"
+    },
+    {
+      "id": "msg-37",
+      "key": "user-ORD-7627",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-26T03:15:27.093Z",
+      "errorType": "DeserializationException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T17:39:36.101Z",
+      "headers": {
+        "correlation-id": "corr-oi0hpxoro",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7627",
+        "userId": "USR-167",
+        "amount": 364,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:210)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:30)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:75)"
+    },
+    {
+      "id": "msg-119",
+      "key": "inventory-ORD-7053",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-26T02:38:41.267Z",
+      "errorType": "UnknownException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-28T09:10:49.058Z",
+      "headers": {
+        "correlation-id": "corr-q03qzohs0",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7053",
+        "userId": "USR-258",
+        "amount": 82,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:66)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:57)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:88)"
+    },
+    {
+      "id": "msg-61",
+      "key": "notification-ORD-8041",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-26T01:10:49.626Z",
+      "errorType": "TimeoutException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T04:31:38.019Z",
+      "headers": {
+        "correlation-id": "corr-b5brnbqk7",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8041",
+        "userId": "USR-591",
+        "amount": 158,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:58)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:76)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:97)"
+    },
+    {
+      "id": "msg-66",
+      "key": "payment-ORD-6338",
+      "serviceId": "payment-service",
+      "topic": "payment.failed",
+      "timestamp": "2025-10-26T00:43:32.141Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-28T09:26:12.694Z",
+      "headers": {
+        "correlation-id": "corr-pg4y06gb1",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6338",
+        "userId": "USR-346",
+        "amount": 175,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:219)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:148)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:37)"
+    },
+    {
+      "id": "msg-21",
+      "key": "payment-ORD-1894",
+      "serviceId": "payment-service",
+      "topic": "payment.refunded",
+      "timestamp": "2025-10-25T23:38:07.416Z",
+      "errorType": "DeserializationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-26T11:02:09.308Z",
+      "headers": {
+        "correlation-id": "corr-5m7m9f4f5",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1894",
+        "userId": "USR-491",
+        "amount": 632,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:89)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:140)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:99)"
+    },
+    {
+      "id": "msg-134",
+      "key": "notification-ORD-6639",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-25T22:29:01.748Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-26T12:18:05.945Z",
+      "headers": {
+        "correlation-id": "corr-piae85e41",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6639",
+        "userId": "USR-674",
+        "amount": 930,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:159)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:175)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:41)"
+    },
+    {
+      "id": "msg-84",
+      "key": "payment-ORD-2168",
+      "serviceId": "payment-service",
+      "topic": "payment.refunded",
+      "timestamp": "2025-10-25T21:36:51.788Z",
+      "errorType": "UnknownException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-6ryoqf5ji",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2168",
+        "userId": "USR-652",
+        "amount": 814,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:58)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:68)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:43)"
+    },
+    {
+      "id": "msg-19",
+      "key": "payment-ORD-7670",
+      "serviceId": "payment-service",
+      "topic": "payment.failed",
+      "timestamp": "2025-10-25T20:33:16.032Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-28T02:59:46.048Z",
+      "headers": {
+        "correlation-id": "corr-xa1ly6q1b",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7670",
+        "userId": "USR-515",
+        "amount": 936,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:186)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:165)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:82)"
+    },
+    {
+      "id": "msg-44",
+      "key": "notification-ORD-4823",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-25T18:54:48.445Z",
+      "errorType": "ValidationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T01:23:59.001Z",
+      "headers": {
+        "correlation-id": "corr-zpzej3u05",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4823",
+        "userId": "USR-347",
+        "amount": 605,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:133)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:52)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:94)"
+    },
+    {
+      "id": "msg-141",
+      "key": "payment-ORD-6885",
+      "serviceId": "payment-service",
+      "topic": "payment.failed",
+      "timestamp": "2025-10-25T18:26:55.484Z",
+      "errorType": "UnknownException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T00:41:08.762Z",
+      "headers": {
+        "correlation-id": "corr-98kh2th3v",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6885",
+        "userId": "USR-210",
+        "amount": 513,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:164)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:35)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:118)"
+    },
+    {
+      "id": "msg-64",
+      "key": "order-ORD-1940",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-25T17:19:42.268Z",
+      "errorType": "DeserializationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T02:20:32.022Z",
+      "headers": {
+        "correlation-id": "corr-ipq1bmyjt",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1940",
+        "userId": "USR-163",
+        "amount": 315,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:82)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:45)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:42)"
+    },
+    {
+      "id": "msg-79",
+      "key": "inventory-ORD-5083",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-25T17:05:06.965Z",
+      "errorType": "ValidationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T19:05:40.908Z",
+      "headers": {
+        "correlation-id": "corr-ziahblygq",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5083",
+        "userId": "USR-456",
+        "amount": 56,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:109)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:175)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:54)"
+    },
+    {
+      "id": "msg-116",
+      "key": "inventory-ORD-445",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-25T11:37:22.112Z",
+      "errorType": "ValidationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T20:54:19.753Z",
+      "headers": {
+        "correlation-id": "corr-4gy7aqbmc",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-445",
+        "userId": "USR-239",
+        "amount": 265,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:52)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:142)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:111)"
+    },
+    {
+      "id": "msg-9",
+      "key": "inventory-ORD-1696",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-25T08:52:29.569Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-28T04:05:34.240Z",
+      "headers": {
+        "correlation-id": "corr-gb86p2dry",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1696",
+        "userId": "USR-988",
+        "amount": 859,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:207)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:44)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:119)"
+    },
+    {
+      "id": "msg-89",
+      "key": "payment-ORD-7980",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-25T04:36:17.479Z",
+      "errorType": "TimeoutException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T14:04:40.452Z",
+      "headers": {
+        "correlation-id": "corr-z4qio4epj",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7980",
+        "userId": "USR-883",
+        "amount": 644,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:187)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:80)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:95)"
+    },
+    {
+      "id": "msg-136",
+      "key": "payment-ORD-6238",
+      "serviceId": "payment-service",
+      "topic": "payment.refunded",
+      "timestamp": "2025-10-25T03:10:57.749Z",
+      "errorType": "TimeoutException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T18:34:24.776Z",
+      "headers": {
+        "correlation-id": "corr-2rp6yrit7",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6238",
+        "userId": "USR-642",
+        "amount": 905,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:124)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:118)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:44)"
+    },
+    {
+      "id": "msg-53",
+      "key": "payment-ORD-1447",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-25T02:18:20.891Z",
+      "errorType": "DeserializationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-gghegiszw",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1447",
+        "userId": "USR-358",
+        "amount": 453,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:89)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:54)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:88)"
+    },
+    {
+      "id": "msg-36",
+      "key": "inventory-ORD-6633",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-25T02:09:51.447Z",
+      "errorType": "TimeoutException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T14:09:11.742Z",
+      "headers": {
+        "correlation-id": "corr-v1xze6lzf",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6633",
+        "userId": "USR-141",
+        "amount": 801,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:115)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:56)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:27)"
+    },
+    {
+      "id": "msg-144",
+      "key": "inventory-ORD-799",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-25T01:53:21.160Z",
+      "errorType": "TimeoutException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T16:07:48.717Z",
+      "headers": {
+        "correlation-id": "corr-77c363tyx",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-799",
+        "userId": "USR-327",
+        "amount": 939,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:200)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:71)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:113)"
+    },
+    {
+      "id": "msg-101",
+      "key": "user-ORD-922",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-25T01:21:25.423Z",
+      "errorType": "DeserializationException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T11:41:05.627Z",
+      "headers": {
+        "correlation-id": "corr-7xvy1k18n",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-922",
+        "userId": "USR-919",
+        "amount": 581,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:68)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:169)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:113)"
+    },
+    {
+      "id": "msg-117",
+      "key": "inventory-ORD-5850",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-24T23:59:50.921Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T19:57:27.507Z",
+      "headers": {
+        "correlation-id": "corr-d3dc039zw",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5850",
+        "userId": "USR-154",
+        "amount": 724,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:236)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:131)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:23)"
+    },
+    {
+      "id": "msg-28",
+      "key": "order-ORD-3930",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-24T23:04:49.193Z",
+      "errorType": "ValidationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-mixe831z2",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3930",
+        "userId": "USR-575",
+        "amount": 765,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:78)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:159)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:25)"
+    },
+    {
+      "id": "msg-103",
+      "key": "inventory-ORD-6206",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-24T21:32:45.069Z",
+      "errorType": "UnknownException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T16:23:28.258Z",
+      "headers": {
+        "correlation-id": "corr-dsa5drgt5",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6206",
+        "userId": "USR-247",
+        "amount": 317,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:89)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:87)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:36)"
+    },
+    {
+      "id": "msg-23",
+      "key": "order-ORD-7864",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-24T21:19:37.984Z",
+      "errorType": "UnknownException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T03:42:15.368Z",
+      "headers": {
+        "correlation-id": "corr-j16wrqtlx",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7864",
+        "userId": "USR-288",
+        "amount": 596,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:92)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:87)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:98)"
+    },
+    {
+      "id": "msg-90",
+      "key": "notification-ORD-4303",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-24T18:49:35.347Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T19:25:35.883Z",
+      "headers": {
+        "correlation-id": "corr-mfph5gpro",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4303",
+        "userId": "USR-447",
+        "amount": 462,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:136)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:108)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:93)"
+    },
+    {
+      "id": "msg-55",
+      "key": "inventory-ORD-3114",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-24T18:42:03.324Z",
+      "errorType": "DeserializationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-no587obbg",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3114",
+        "userId": "USR-926",
+        "amount": 776,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:113)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:139)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:46)"
+    },
+    {
+      "id": "msg-43",
+      "key": "payment-ORD-1487",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-24T18:16:03.886Z",
+      "errorType": "TimeoutException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-745lb5r1t",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1487",
+        "userId": "USR-451",
+        "amount": 777,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:113)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:126)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:104)"
+    },
+    {
+      "id": "msg-17",
+      "key": "payment-ORD-6360",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-24T17:41:04.154Z",
+      "errorType": "DeserializationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-j0hp91agq",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6360",
+        "userId": "USR-660",
+        "amount": 847,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:93)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:98)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:90)"
+    },
+    {
+      "id": "msg-131",
+      "key": "user-ORD-462",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-24T16:05:28.444Z",
+      "errorType": "UnknownException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T19:21:59.629Z",
+      "headers": {
+        "correlation-id": "corr-6p097zoq8",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-462",
+        "userId": "USR-533",
+        "amount": 805,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:98)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:115)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:33)"
+    },
+    {
+      "id": "msg-49",
+      "key": "order-ORD-538",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-24T15:11:37.580Z",
+      "errorType": "TimeoutException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T12:03:35.373Z",
+      "headers": {
+        "correlation-id": "corr-c9mmlybqt",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-538",
+        "userId": "USR-11",
+        "amount": 362,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:178)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:92)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:58)"
+    },
+    {
+      "id": "msg-112",
+      "key": "notification-ORD-7140",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-24T15:10:51.917Z",
+      "errorType": "UnknownException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T06:40:59.660Z",
+      "headers": {
+        "correlation-id": "corr-m9d2z9nes",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7140",
+        "userId": "USR-178",
+        "amount": 376,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:112)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:67)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:95)"
+    },
+    {
+      "id": "msg-133",
+      "key": "payment-ORD-4021",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-24T08:59:36.548Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T13:00:27.877Z",
+      "headers": {
+        "correlation-id": "corr-hzk9tm76w",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4021",
+        "userId": "USR-341",
+        "amount": 681,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:65)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:171)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:81)"
+    },
+    {
+      "id": "msg-77",
+      "key": "inventory-ORD-5491",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-24T07:02:33.312Z",
+      "errorType": "TimeoutException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T03:10:50.748Z",
+      "headers": {
+        "correlation-id": "corr-fpcas8hb3",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5491",
+        "userId": "USR-912",
+        "amount": 773,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:129)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:50)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:48)"
+    },
+    {
+      "id": "msg-48",
+      "key": "inventory-ORD-8059",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-24T06:57:37.939Z",
+      "errorType": "DeserializationException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T23:27:41.933Z",
+      "headers": {
+        "correlation-id": "corr-66ydjn2fd",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8059",
+        "userId": "USR-846",
+        "amount": 453,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:69)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:154)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:44)"
+    },
+    {
+      "id": "msg-47",
+      "key": "user-ORD-1024",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-24T05:19:58.855Z",
+      "errorType": "TimeoutException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-26T20:50:36.805Z",
+      "headers": {
+        "correlation-id": "corr-fis4u8naw",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1024",
+        "userId": "USR-188",
+        "amount": 627,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:157)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:30)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:91)"
+    },
+    {
+      "id": "msg-58",
+      "key": "user-ORD-2862",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-24T04:47:33.735Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-aicex34e0",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2862",
+        "userId": "USR-419",
+        "amount": 823,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:220)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:81)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:24)"
+    },
+    {
+      "id": "msg-95",
+      "key": "order-ORD-6271",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-24T02:40:27.804Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T05:13:35.866Z",
+      "headers": {
+        "correlation-id": "corr-2jnvei12u",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6271",
+        "userId": "USR-649",
+        "amount": 731,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:156)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:79)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:67)"
+    },
+    {
+      "id": "msg-2",
+      "key": "user-ORD-4014",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-24T02:06:32.922Z",
+      "errorType": "TimeoutException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T14:49:29.140Z",
+      "headers": {
+        "correlation-id": "corr-3dedhs52x",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4014",
+        "userId": "USR-271",
+        "amount": 799,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:190)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:34)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:82)"
+    },
+    {
+      "id": "msg-81",
+      "key": "payment-ORD-6149",
+      "serviceId": "payment-service",
+      "topic": "payment.failed",
+      "timestamp": "2025-10-24T01:34:04.644Z",
+      "errorType": "ValidationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-26T16:27:34.687Z",
+      "headers": {
+        "correlation-id": "corr-0g9d04x1r",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6149",
+        "userId": "USR-689",
+        "amount": 775,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:77)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:31)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:97)"
+    },
+    {
+      "id": "msg-75",
+      "key": "order-ORD-6846",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-24T01:30:56.060Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-26T12:05:30.944Z",
+      "headers": {
+        "correlation-id": "corr-r5eitkc45",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6846",
+        "userId": "USR-949",
+        "amount": 222,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:101)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:161)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:24)"
+    },
+    {
+      "id": "msg-52",
+      "key": "inventory-ORD-4144",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-24T01:21:39.225Z",
+      "errorType": "UnknownException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T01:17:50.601Z",
+      "headers": {
+        "correlation-id": "corr-70z7rntqh",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4144",
+        "userId": "USR-694",
+        "amount": 853,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:141)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:88)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:69)"
+    },
+    {
+      "id": "msg-42",
+      "key": "order-ORD-1986",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-23T23:50:54.367Z",
+      "errorType": "UnknownException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T04:42:23.443Z",
+      "headers": {
+        "correlation-id": "corr-hwpwgilap",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1986",
+        "userId": "USR-33",
+        "amount": 764,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:61)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:75)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:79)"
+    },
+    {
+      "id": "msg-124",
+      "key": "order-ORD-2716",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-23T23:24:33.009Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-o7vwexith",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2716",
+        "userId": "USR-174",
+        "amount": 367,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:193)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:114)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:36)"
+    },
+    {
+      "id": "msg-20",
+      "key": "inventory-ORD-7107",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-23T22:11:57.148Z",
+      "errorType": "TimeoutException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-26T18:35:12.647Z",
+      "headers": {
+        "correlation-id": "corr-722paue7a",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7107",
+        "userId": "USR-32",
+        "amount": 675,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:97)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:46)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:21)"
+    },
+    {
+      "id": "msg-41",
+      "key": "order-ORD-2893",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-23T19:24:59.258Z",
+      "errorType": "ValidationException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T04:43:16.618Z",
+      "headers": {
+        "correlation-id": "corr-y8xw8t8ev",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2893",
+        "userId": "USR-632",
+        "amount": 921,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:159)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:142)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:36)"
+    },
+    {
+      "id": "msg-128",
+      "key": "notification-ORD-2244",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-23T17:09:13.445Z",
+      "errorType": "UnknownException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-28T06:56:45.511Z",
+      "headers": {
+        "correlation-id": "corr-wocq4x79m",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2244",
+        "userId": "USR-946",
+        "amount": 213,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:67)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:82)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:49)"
+    },
+    {
+      "id": "msg-122",
+      "key": "order-ORD-476",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-23T15:23:48.317Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T23:34:46.957Z",
+      "headers": {
+        "correlation-id": "corr-6su9qcpyd",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-476",
+        "userId": "USR-33",
+        "amount": 960,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:97)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:33)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:91)"
+    },
+    {
+      "id": "msg-126",
+      "key": "user-ORD-5084",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-23T14:55:44.042Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-26T11:58:17.613Z",
+      "headers": {
+        "correlation-id": "corr-rxti4t26x",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5084",
+        "userId": "USR-229",
+        "amount": 379,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:165)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:158)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:68)"
+    },
+    {
+      "id": "msg-147",
+      "key": "order-ORD-6655",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-23T13:49:33.901Z",
+      "errorType": "DeserializationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-9l0m1r0bu",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6655",
+        "userId": "USR-302",
+        "amount": 407,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:126)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:132)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:103)"
+    },
+    {
+      "id": "msg-123",
+      "key": "notification-ORD-1259",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-23T11:10:49.288Z",
+      "errorType": "DeserializationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-uwyi1ksmc",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1259",
+        "userId": "USR-979",
+        "amount": 537,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:107)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:173)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:109)"
+    },
+    {
+      "id": "msg-15",
+      "key": "payment-ORD-8942",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-23T10:58:36.605Z",
+      "errorType": "ValidationException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-28T08:28:26.043Z",
+      "headers": {
+        "correlation-id": "corr-2u8qwc4mp",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8942",
+        "userId": "USR-793",
+        "amount": 162,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:169)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:130)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:105)"
+    },
+    {
+      "id": "msg-39",
+      "key": "order-ORD-676",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-23T09:51:48.772Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-26T11:43:11.114Z",
+      "headers": {
+        "correlation-id": "corr-su7m4bw4u",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-676",
+        "userId": "USR-449",
+        "amount": 861,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:187)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:115)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:94)"
+    },
+    {
+      "id": "msg-108",
+      "key": "notification-ORD-8691",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-23T08:18:30.554Z",
+      "errorType": "DeserializationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T23:44:23.533Z",
+      "headers": {
+        "correlation-id": "corr-lirgsqugt",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8691",
+        "userId": "USR-752",
+        "amount": 846,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:188)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:175)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:44)"
+    },
+    {
+      "id": "msg-26",
+      "key": "payment-ORD-772",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-23T08:01:26.565Z",
+      "errorType": "TimeoutException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T20:31:35.282Z",
+      "headers": {
+        "correlation-id": "corr-2dss9910i",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-772",
+        "userId": "USR-218",
+        "amount": 324,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:183)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:46)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:104)"
+    },
+    {
+      "id": "msg-3",
+      "key": "payment-ORD-5107",
+      "serviceId": "payment-service",
+      "topic": "payment.refunded",
+      "timestamp": "2025-10-23T07:19:13.573Z",
+      "errorType": "UnknownException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T03:17:12.784Z",
+      "headers": {
+        "correlation-id": "corr-xn9qpn03k",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5107",
+        "userId": "USR-737",
+        "amount": 944,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:241)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:136)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:76)"
+    },
+    {
+      "id": "msg-78",
+      "key": "inventory-ORD-6936",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-23T07:05:59.479Z",
+      "errorType": "TimeoutException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-qgm3ekeor",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6936",
+        "userId": "USR-720",
+        "amount": 791,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:81)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:152)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:81)"
+    },
+    {
+      "id": "msg-46",
+      "key": "user-ORD-1836",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-23T06:23:29.863Z",
+      "errorType": "DeserializationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T06:23:09.647Z",
+      "headers": {
+        "correlation-id": "corr-xdmw8etoh",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1836",
+        "userId": "USR-82",
+        "amount": 677,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:196)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:128)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:91)"
+    },
+    {
+      "id": "msg-73",
+      "key": "order-ORD-1428",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-23T06:04:17.794Z",
+      "errorType": "DeserializationException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-28T09:35:25.234Z",
+      "headers": {
+        "correlation-id": "corr-hamtenu1v",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1428",
+        "userId": "USR-202",
+        "amount": 986,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:64)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:100)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:51)"
+    },
+    {
+      "id": "msg-71",
+      "key": "notification-ORD-5178",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-23T05:40:55.468Z",
+      "errorType": "UnknownException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-28T02:12:05.798Z",
+      "headers": {
+        "correlation-id": "corr-b1v7g558y",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5178",
+        "userId": "USR-664",
+        "amount": 638,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:243)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:157)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:57)"
+    },
+    {
+      "id": "msg-32",
+      "key": "payment-ORD-5979",
+      "serviceId": "payment-service",
+      "topic": "payment.created",
+      "timestamp": "2025-10-23T05:14:41.104Z",
+      "errorType": "UnknownException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-6jp7htmx2",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5979",
+        "userId": "USR-391",
+        "amount": 87,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:192)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:76)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:107)"
+    },
+    {
+      "id": "msg-92",
+      "key": "notification-ORD-5996",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-23T02:29:04.572Z",
+      "errorType": "TimeoutException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-l1bue4a08",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5996",
+        "userId": "USR-898",
+        "amount": 483,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:153)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:178)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:78)"
+    },
+    {
+      "id": "msg-25",
+      "key": "user-ORD-3944",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-23T02:09:05.031Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-26T15:35:22.504Z",
+      "headers": {
+        "correlation-id": "corr-gsf4r3sai",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3944",
+        "userId": "USR-337",
+        "amount": 274,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:234)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:107)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:44)"
+    },
+    {
+      "id": "msg-107",
+      "key": "payment-ORD-6981",
+      "serviceId": "payment-service",
+      "topic": "payment.refunded",
+      "timestamp": "2025-10-23T01:31:33.943Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T14:13:28.524Z",
+      "headers": {
+        "correlation-id": "corr-69tmarugu",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6981",
+        "userId": "USR-592",
+        "amount": 55,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:220)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:84)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:21)"
+    },
+    {
+      "id": "msg-115",
+      "key": "notification-ORD-9130",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-23T00:43:42.517Z",
+      "errorType": "ValidationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T20:53:02.749Z",
+      "headers": {
+        "correlation-id": "corr-gb7srfs9u",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-9130",
+        "userId": "USR-579",
+        "amount": 565,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:146)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:70)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:114)"
+    },
+    {
+      "id": "msg-93",
+      "key": "inventory-ORD-5004",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-23T00:35:46.541Z",
+      "errorType": "TimeoutException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T20:34:55.876Z",
+      "headers": {
+        "correlation-id": "corr-mmusp8f4g",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5004",
+        "userId": "USR-142",
+        "amount": 826,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:106)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:130)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:70)"
+    },
+    {
+      "id": "msg-82",
+      "key": "user-ORD-6935",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-22T22:35:03.437Z",
+      "errorType": "DeserializationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-m2cy4mg92",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6935",
+        "userId": "USR-870",
+        "amount": 757,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:197)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:135)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:54)"
+    },
+    {
+      "id": "msg-127",
+      "key": "user-ORD-3092",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-22T22:09:18.818Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-26T17:57:46.696Z",
+      "headers": {
+        "correlation-id": "corr-5ty9ayjfq",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3092",
+        "userId": "USR-413",
+        "amount": 716,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:178)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:119)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:49)"
+    },
+    {
+      "id": "msg-149",
+      "key": "notification-ORD-6419",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-22T21:59:43.430Z",
+      "errorType": "DeserializationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T19:44:14.016Z",
+      "headers": {
+        "correlation-id": "corr-20sje1nqc",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6419",
+        "userId": "USR-271",
+        "amount": 793,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:182)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:55)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:31)"
+    },
+    {
+      "id": "msg-50",
+      "key": "notification-ORD-2952",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-22T20:19:30.274Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-28T06:24:57.483Z",
+      "headers": {
+        "correlation-id": "corr-r6tcxt8ft",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2952",
+        "userId": "USR-409",
+        "amount": 987,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:173)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:173)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:68)"
+    },
+    {
+      "id": "msg-57",
+      "key": "user-ORD-8033",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-22T20:18:51.704Z",
+      "errorType": "UnknownException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-fj6vig5d3",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8033",
+        "userId": "USR-5",
+        "amount": 124,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:119)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:51)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:28)"
+    },
+    {
+      "id": "msg-138",
+      "key": "order-ORD-8056",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-22T19:03:34.876Z",
+      "errorType": "DeserializationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-b9hrnhtl5",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8056",
+        "userId": "USR-225",
+        "amount": 491,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:153)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:179)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:30)"
+    },
+    {
+      "id": "msg-140",
+      "key": "user-ORD-3299",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-22T16:39:15.944Z",
+      "errorType": "UnknownException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T16:32:13.204Z",
+      "headers": {
+        "correlation-id": "corr-au4yf223d",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3299",
+        "userId": "USR-685",
+        "amount": 223,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:203)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:61)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:116)"
+    },
+    {
+      "id": "msg-139",
+      "key": "user-ORD-4147",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-22T16:27:06.861Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T21:30:13.158Z",
+      "headers": {
+        "correlation-id": "corr-4rzmji66e",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4147",
+        "userId": "USR-973",
+        "amount": 427,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:170)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:69)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:74)"
+    },
+    {
+      "id": "msg-67",
+      "key": "notification-ORD-5709",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-22T14:45:34.482Z",
+      "errorType": "ValidationException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T04:43:40.997Z",
+      "headers": {
+        "correlation-id": "corr-rzrq1tq8m",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5709",
+        "userId": "USR-529",
+        "amount": 607,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:143)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:173)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:103)"
+    },
+    {
+      "id": "msg-113",
+      "key": "user-ORD-1909",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-22T14:15:21.326Z",
+      "errorType": "TimeoutException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-28T05:46:31.521Z",
+      "headers": {
+        "correlation-id": "corr-e5qph1l23",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1909",
+        "userId": "USR-550",
+        "amount": 918,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:72)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:92)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:43)"
+    },
+    {
+      "id": "msg-145",
+      "key": "inventory-ORD-1553",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-22T13:44:51.378Z",
+      "errorType": "TimeoutException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T08:54:04.158Z",
+      "headers": {
+        "correlation-id": "corr-mvfkftgyu",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1553",
+        "userId": "USR-512",
+        "amount": 456,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:53)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:41)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:90)"
+    },
+    {
+      "id": "msg-135",
+      "key": "notification-ORD-2384",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-22T12:55:26.771Z",
+      "errorType": "UnknownException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-cp7p5dj1v",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2384",
+        "userId": "USR-270",
+        "amount": 432,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:53)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:130)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:35)"
+    },
+    {
+      "id": "msg-33",
+      "key": "order-ORD-6125",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-22T12:47:58.655Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-zp88eh18j",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6125",
+        "userId": "USR-854",
+        "amount": 924,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:188)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:38)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:68)"
+    },
+    {
+      "id": "msg-16",
+      "key": "user-ORD-5994",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-22T11:25:38.248Z",
+      "errorType": "UnknownException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-gpte2b052",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-5994",
+        "userId": "USR-201",
+        "amount": 638,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:134)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:47)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:91)"
+    },
+    {
+      "id": "msg-110",
+      "key": "order-ORD-3077",
+      "serviceId": "order-service",
+      "topic": "order.completed",
+      "timestamp": "2025-10-22T11:00:26.345Z",
+      "errorType": "TimeoutException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T18:44:31.553Z",
+      "headers": {
+        "correlation-id": "corr-vu0i59q90",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3077",
+        "userId": "USR-256",
+        "amount": 885,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:238)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:44)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:51)"
+    },
+    {
+      "id": "msg-111",
+      "key": "order-ORD-346",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-22T10:13:18.950Z",
+      "errorType": "TimeoutException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T14:35:02.733Z",
+      "headers": {
+        "correlation-id": "corr-6ig1dc71x",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-346",
+        "userId": "USR-474",
+        "amount": 397,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:211)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:63)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:42)"
+    },
+    {
+      "id": "msg-27",
+      "key": "order-ORD-1788",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-22T07:28:50.292Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T08:08:36.306Z",
+      "headers": {
+        "correlation-id": "corr-heo9p5fy0",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1788",
+        "userId": "USR-51",
+        "amount": 812,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:63)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:39)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:28)"
+    },
+    {
+      "id": "msg-142",
+      "key": "order-ORD-6838",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-22T05:34:31.138Z",
+      "errorType": "DeserializationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T21:23:13.363Z",
+      "headers": {
+        "correlation-id": "corr-e60ihxp05",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6838",
+        "userId": "USR-191",
+        "amount": 988,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:63)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:52)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:105)"
+    },
+    {
+      "id": "msg-96",
+      "key": "inventory-ORD-7609",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-22T04:05:26.894Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-989xauhas",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7609",
+        "userId": "USR-526",
+        "amount": 844,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:91)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:83)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:30)"
+    },
+    {
+      "id": "msg-146",
+      "key": "inventory-ORD-8068",
+      "serviceId": "inventory-service",
+      "topic": "inventory.low-stock",
+      "timestamp": "2025-10-22T03:29:21.840Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T17:55:07.147Z",
+      "headers": {
+        "correlation-id": "corr-qlqudc4ls",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8068",
+        "userId": "USR-483",
+        "amount": 232,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:203)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:168)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:73)"
+    },
+    {
+      "id": "msg-30",
+      "key": "user-ORD-7329",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-22T03:12:16.792Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-26T18:18:56.465Z",
+      "headers": {
+        "correlation-id": "corr-ag0nm349d",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7329",
+        "userId": "USR-76",
+        "amount": 849,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:165)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:112)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:109)"
+    },
+    {
+      "id": "msg-88",
+      "key": "user-ORD-6276",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-22T01:23:51.822Z",
+      "errorType": "DeserializationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-28T06:13:18.211Z",
+      "headers": {
+        "correlation-id": "corr-ukxo3r4hh",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6276",
+        "userId": "USR-328",
+        "amount": 326,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:222)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:154)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:21)"
+    },
+    {
+      "id": "msg-105",
+      "key": "user-ORD-9237",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-22T00:53:17.441Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T07:47:56.016Z",
+      "headers": {
+        "correlation-id": "corr-knl77fdz3",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-9237",
+        "userId": "USR-88",
+        "amount": 520,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:102)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:108)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:87)"
+    },
+    {
+      "id": "msg-12",
+      "key": "user-ORD-607",
+      "serviceId": "user-service",
+      "topic": "user.updated",
+      "timestamp": "2025-10-21T22:55:40.723Z",
+      "errorType": "TimeoutException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-26T19:29:01.330Z",
+      "headers": {
+        "correlation-id": "corr-kxkom6iwf",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-607",
+        "userId": "USR-883",
+        "amount": 285,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:185)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:112)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:106)"
+    },
+    {
+      "id": "msg-72",
+      "key": "notification-ORD-4692",
+      "serviceId": "notification-service",
+      "topic": "notification.email.failed",
+      "timestamp": "2025-10-21T22:53:54.139Z",
+      "errorType": "DeserializationException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-26T23:46:25.651Z",
+      "headers": {
+        "correlation-id": "corr-q7clv423p",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4692",
+        "userId": "USR-453",
+        "amount": 873,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:126)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:30)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:57)"
+    },
+    {
+      "id": "msg-99",
+      "key": "inventory-ORD-1022",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-21T22:48:34.119Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-27T15:45:53.795Z",
+      "headers": {
+        "correlation-id": "corr-w0fnn1yyu",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1022",
+        "userId": "USR-555",
+        "amount": 434,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:220)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:76)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:72)"
+    },
+    {
+      "id": "msg-5",
+      "key": "order-ORD-4412",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-21T21:59:19.365Z",
+      "errorType": "TimeoutException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T22:53:11.917Z",
+      "headers": {
+        "correlation-id": "corr-j0r60w1pr",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4412",
+        "userId": "USR-534",
+        "amount": 796,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:231)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:138)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:51)"
+    },
+    {
+      "id": "msg-4",
+      "key": "inventory-ORD-7083",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-21T21:08:41.739Z",
+      "errorType": "TimeoutException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T03:16:59.697Z",
+      "headers": {
+        "correlation-id": "corr-965v1q89y",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-7083",
+        "userId": "USR-776",
+        "amount": 496,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:69)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:132)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:93)"
+    },
+    {
+      "id": "msg-83",
+      "key": "notification-ORD-170",
+      "serviceId": "notification-service",
+      "topic": "notification.sms.failed",
+      "timestamp": "2025-10-21T20:33:59.758Z",
+      "errorType": "TimeoutException",
+      "replayCount": 2,
+      "lastReplayAt": "2025-10-28T10:02:37.776Z",
+      "headers": {
+        "correlation-id": "corr-97nws1qt4",
+        "source": "notification-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-170",
+        "userId": "USR-641",
+        "amount": 665,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:78)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:173)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:61)"
+    },
+    {
+      "id": "msg-11",
+      "key": "inventory-ORD-1687",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-21T19:41:08.559Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-28T04:05:48.798Z",
+      "headers": {
+        "correlation-id": "corr-vepy59zc6",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-1687",
+        "userId": "USR-279",
+        "amount": 740,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:227)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:149)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:118)"
+    },
+    {
+      "id": "msg-7",
+      "key": "order-ORD-6296",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-21T14:28:19.466Z",
+      "errorType": "ValidationException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T22:25:15.427Z",
+      "headers": {
+        "correlation-id": "corr-tiwwnb5ch",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6296",
+        "userId": "USR-717",
+        "amount": 535,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:74)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:58)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:26)"
+    },
+    {
+      "id": "msg-14",
+      "key": "order-ORD-8383",
+      "serviceId": "order-service",
+      "topic": "order.created",
+      "timestamp": "2025-10-21T14:00:13.740Z",
+      "errorType": "TimeoutException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T13:20:46.891Z",
+      "headers": {
+        "correlation-id": "corr-02uh01j7w",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-8383",
+        "userId": "USR-897",
+        "amount": 270,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "TimeoutException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:59)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:58)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:58)"
+    },
+    {
+      "id": "msg-106",
+      "key": "payment-ORD-3715",
+      "serviceId": "payment-service",
+      "topic": "payment.refunded",
+      "timestamp": "2025-10-21T11:51:44.357Z",
+      "errorType": "ValidationException",
+      "replayCount": 0,
+      "lastReplayAt": null,
+      "headers": {
+        "correlation-id": "corr-5vd48p32s",
+        "source": "payment-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-3715",
+        "userId": "USR-113",
+        "amount": 195,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ValidationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:131)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:167)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:78)"
+    },
+    {
+      "id": "msg-109",
+      "key": "inventory-ORD-2216",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-21T11:51:15.048Z",
+      "errorType": "UnknownException",
+      "replayCount": 1,
+      "lastReplayAt": "2025-10-27T18:52:20.165Z",
+      "headers": {
+        "correlation-id": "corr-khwjl67lr",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-2216",
+        "userId": "USR-453",
+        "amount": 1038,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "UnknownException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:115)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:131)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:45)"
+    },
+    {
+      "id": "msg-129",
+      "key": "order-ORD-9119",
+      "serviceId": "order-service",
+      "topic": "order.cancelled",
+      "timestamp": "2025-10-21T11:22:16.070Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 3,
+      "lastReplayAt": "2025-10-27T16:25:46.629Z",
+      "headers": {
+        "correlation-id": "corr-rrefhjrmb",
+        "source": "order-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-9119",
+        "userId": "USR-2",
+        "amount": 635,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:124)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:95)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:82)"
+    },
+    {
+      "id": "msg-18",
+      "key": "inventory-ORD-6893",
+      "serviceId": "inventory-service",
+      "topic": "inventory.updated",
+      "timestamp": "2025-10-21T10:57:47.599Z",
+      "errorType": "ServiceUnavailableException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-26T10:21:24.369Z",
+      "headers": {
+        "correlation-id": "corr-e1p90ouee",
+        "source": "inventory-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-6893",
+        "userId": "USR-786",
+        "amount": 188,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "ServiceUnavailableException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:210)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:64)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:79)"
+    },
+    {
+      "id": "msg-70",
+      "key": "user-ORD-4128",
+      "serviceId": "user-service",
+      "topic": "user.created",
+      "timestamp": "2025-10-21T10:47:46.566Z",
+      "errorType": "DeserializationException",
+      "replayCount": 4,
+      "lastReplayAt": "2025-10-27T03:51:26.995Z",
+      "headers": {
+        "correlation-id": "corr-7bsvnjodb",
+        "source": "user-service",
+        "content-type": "application/json"
+      },
+      "payload": {
+        "orderId": "ORD-4128",
+        "userId": "USR-381",
+        "amount": 621,
+        "currency": "USD",
+        "status": "failed"
+      },
+      "stacktrace": "DeserializationException: Failed to process message\n  at com.kafka.processor.MessageHandler.handle(MessageHandler.java:166)\n  at com.kafka.consumer.KafkaConsumer.consume(KafkaConsumer.java:121)\n  at com.kafka.listener.MessageListener.onMessage(MessageListener.java:84)"
+    }
+  ],
+  "replays": [],
+  "metrics": {
+    "totalDltMessages": 150,
+    "dltLast24h": 24,
+    "topServices": [
+      {
+        "serviceName": "Payment Service",
+        "count": 27
+      },
+      {
+        "serviceName": "Order Service",
+        "count": 36
+      },
+      {
+        "serviceName": "Notification Service",
+        "count": 25
+      }
+    ],
+    "dltByTopic": [
+      {
+        "topic": "user.updated",
+        "count": 19
+      },
+      {
+        "topic": "inventory.low-stock",
+        "count": 16
+      },
+      {
+        "topic": "inventory.updated",
+        "count": 15
+      },
+      {
+        "topic": "payment.created",
+        "count": 13
+      },
+      {
+        "topic": "order.created",
+        "count": 13
+      },
+      {
+        "topic": "notification.email.failed",
+        "count": 13
+      },
+      {
+        "topic": "order.cancelled",
+        "count": 12
+      },
+      {
+        "topic": "notification.sms.failed",
+        "count": 12
+      },
+      {
+        "topic": "user.created",
+        "count": 12
+      },
+      {
+        "topic": "order.completed",
+        "count": 11
+      }
+    ],
+    "dltByErrorType": [
+      {
+        "errorType": "ServiceUnavailableException",
+        "count": 33
+      },
+      {
+        "errorType": "TimeoutException",
+        "count": 32
+      },
+      {
+        "errorType": "DeserializationException",
+        "count": 31
+      },
+      {
+        "errorType": "ValidationException",
+        "count": 27
+      },
+      {
+        "errorType": "UnknownException",
+        "count": 27
+      }
+    ],
+    "dltByTime": [
+      {
+        "date": "2025-10-22",
+        "count": 23
+      },
+      {
+        "date": "2025-10-23",
+        "count": 24
+      },
+      {
+        "date": "2025-10-24",
+        "count": 21
+      },
+      {
+        "date": "2025-10-25",
+        "count": 16
+      },
+      {
+        "date": "2025-10-26",
+        "count": 14
+      },
+      {
+        "date": "2025-10-27",
+        "count": 29
+      },
+      {
+        "date": "2025-10-28",
+        "count": 9
+      }
+    ]
+  }
+}

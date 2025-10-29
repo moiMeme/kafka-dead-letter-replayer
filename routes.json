@@ -1,0 +1,10 @@
+{
+  "/api/services": "/services",
+  "/api/topics": "/topics",
+  "/api/topics?serviceId=:serviceId": "/topics?serviceId=:serviceId",
+  "/api/messages": "/messages",
+  "/api/messages/:id": "/messages/:id",
+  "/api/replays": "/replays",
+  "/api/replays/history": "/replays",
+  "/api/metrics/overview": "/metrics/overview"
+}

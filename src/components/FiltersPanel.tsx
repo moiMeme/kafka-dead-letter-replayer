@@ -25,6 +25,12 @@ export function FiltersPanel() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [errorTypes, setErrorTypes] = useState<string[]>([]);
 
+  // Local state for advanced filters (not applied until button click)
+  const [localSearchByKey, setLocalSearchByKey] = useState('');
+  const [localSearchByValue, setLocalSearchByValue] = useState('');
+  const [localHeaderKey, setLocalHeaderKey] = useState('');
+  const [localHeaderValue, setLocalHeaderValue] = useState('');
+
   // Fetch services and error types on mount
   useEffect(() => {
     const fetchData = async () => {
@@ -64,10 +70,24 @@ export function FiltersPanel() {
 
   const hasActiveFilters = selectedService || selectedTopic || filters.errorType || filters.search || filters.dateFrom || filters.dateTo || filters.searchByKey || filters.searchByValue || filters.headerKey || filters.headerValue;
 
+  const handleApplyAdvancedFilters = () => {
+    setFilters({
+      searchByKey: localSearchByKey,
+      searchByValue: localSearchByValue,
+      headerKey: localHeaderKey,
+      headerValue: localHeaderValue
+    });
+  };
+
   const handleReset = () => {
     setSelectedService(null);
     setSelectedTopic(null);
     resetFilters();
+    // Also reset local advanced filter state
+    setLocalSearchByKey('');
+    setLocalSearchByValue('');
+    setLocalHeaderKey('');
+    setLocalHeaderValue('');
   };
 
   return (
@@ -165,8 +185,8 @@ export function FiltersPanel() {
               <Label className="text-slate-700 dark:text-slate-300 text-sm">Search by Key</Label>
               <Input
                 placeholder="Search by message key..."
-                value={filters.searchByKey}
-                onChange={(e) => setFilters({ searchByKey: e.target.value })}
+                value={localSearchByKey}
+                onChange={(e) => setLocalSearchByKey(e.target.value)}
                 className="w-full"
               />
             </div>
@@ -175,8 +195,8 @@ export function FiltersPanel() {
               <Label className="text-slate-700 dark:text-slate-300 text-sm">Search by Value</Label>
               <Input
                 placeholder="Search in message content..."
-                value={filters.searchByValue}
-                onChange={(e) => setFilters({ searchByValue: e.target.value })}
+                value={localSearchByValue}
+                onChange={(e) => setLocalSearchByValue(e.target.value)}
                 className="w-full"
               />
             </div>
@@ -185,8 +205,8 @@ export function FiltersPanel() {
               <Label className="text-slate-700 dark:text-slate-300 text-sm">Header Key</Label>
               <Input
                 placeholder="e.g., correlation-id"
-                value={filters.headerKey}
-                onChange={(e) => setFilters({ headerKey: e.target.value })}
+                value={localHeaderKey}
+                onChange={(e) => setLocalHeaderKey(e.target.value)}
                 className="w-full"
               />
             </div>
@@ -195,11 +215,19 @@ export function FiltersPanel() {
               <Label className="text-slate-700 dark:text-slate-300 text-sm">Header Value</Label>
               <Input
                 placeholder="Search header value..."
-                value={filters.headerValue}
-                onChange={(e) => setFilters({ headerValue: e.target.value })}
+                value={localHeaderValue}
+                onChange={(e) => setLocalHeaderValue(e.target.value)}
                 className="w-full"
               />
             </div>
+
+            <Button
+              onClick={handleApplyAdvancedFilters}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white mt-4"
+            >
+              <Filter className="h-4 w-4 mr-2" />
+              Apply Advanced Filters
+            </Button>
           </div>
         </div>
 

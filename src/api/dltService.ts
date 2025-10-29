@@ -38,14 +38,12 @@ export const DltApiService = (api: AxiosInstance) => ({
     return response.data.map((item: { id: number; name: string }) => item.name);
   },
 
-  // Messages - with server-side pagination
+  // Messages - with server-side filtering and client-side pagination
   getMessages: async (params?: MessageQueryParams): Promise<PaginatedResponse<Message>> => {
     const { page = 1, pageSize = 20, ...filters } = params || {};
 
-    // Build query params for json-server
+    // Build query params for json-server (filtering only, no pagination)
     const queryParams: any = {
-      _page: page,
-      _limit: pageSize,
       _sort: 'timestamp',
       _order: 'desc'
     };
@@ -63,12 +61,17 @@ export const DltApiService = (api: AxiosInstance) => ({
 
     const response = await api.get('/messages', { params: queryParams });
 
-    // json-server returns total count in X-Total-Count header
-    const total = parseInt(response.headers['x-total-count'] || '0', 10);
+    // Get all filtered messages
+    const allMessages: Message[] = response.data;
+    const total = allMessages.length;
     const totalPages = Math.ceil(total / pageSize);
 
+    // Paginate on client side
+    const startIndex = (page - 1) * pageSize;
+    const paginatedData = allMessages.slice(startIndex, startIndex + pageSize);
+
     return {
-      data: response.data,
+      data: paginatedData,
       total,
       page,
       pageSize,

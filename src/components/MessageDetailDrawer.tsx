@@ -15,6 +15,8 @@ import { format } from 'date-fns';
 import Editor from '@monaco-editor/react';
 import { useTheme } from './ThemeProvider';
 import { getShortErrorName, formatStacktrace, parsePayload } from '../lib/formatters';
+import type { ReplayRequest } from '../api/dltService';
+import { toast } from '../hooks/use-toast';
 
 const errorTypeColors: Record<string, string> = {
   'NotFoundException': 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
@@ -29,13 +31,14 @@ const errorTypeColors: Record<string, string> = {
 export function MessageDetailDrawer() {
   const { theme } = useTheme();
   const dltApi = useDltApi();
-  const { selectedMessage, drawerOpen, setDrawerOpen, setReplayDialogOpen, setSelectedMessages } = useDltStore();
+  const { selectedMessage, drawerOpen, setDrawerOpen } = useDltStore();
   const [editedPayload, setEditedPayload] = useState('');
   const [editedHeaders, setEditedHeaders] = useState<Record<string, string>>({});
   const [newHeaderKey, setNewHeaderKey] = useState('');
   const [newHeaderValue, setNewHeaderValue] = useState('');
   const [replayHistory, setReplayHistory] = useState<ReplayHistoryItem[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const [isReplaying, setIsReplaying] = useState(false);
 
   useEffect(() => {
     const fetchReplayHistory = async () => {
@@ -64,9 +67,55 @@ export function MessageDetailDrawer() {
 
   if (!selectedMessage) return null;
 
-  const handleReplay = () => {
-    setSelectedMessages([selectedMessage.id]);
-    setReplayDialogOpen(true);
+  const handleReplay = async () => {
+    setIsReplaying(true);
+
+    try {
+      // Validate JSON payload before sending
+      let payloadToSend = editedPayload;
+      try {
+        JSON.parse(editedPayload); // Validate it's valid JSON
+      } catch (e) {
+        toast({
+          title: 'Invalid JSON',
+          description: 'The payload is not valid JSON. Please fix the syntax errors.',
+          variant: 'destructive'
+        });
+        setIsReplaying(false);
+        return;
+      }
+
+      // Build replay request with edited data
+      const replayRequest: ReplayRequest = {
+        messageId: selectedMessage.id,
+        payload: payloadToSend,
+        headers: editedHeaders
+      };
+
+      // Call the API to replay message with edited data
+      await dltApi.replayMessages([replayRequest]);
+
+      toast({
+        title: 'Replay initiated',
+        description: 'Message replayed successfully with your edits. History saved by API.',
+        variant: 'default'
+      });
+
+      // Refresh replay history
+      const history = await dltApi.getReplayHistory(selectedMessage.id);
+      setReplayHistory(history);
+
+      setDrawerOpen(false);
+    } catch (error) {
+      console.error('Failed to replay message:', error);
+      toast({
+        title: 'Replay failed',
+        description: 'Failed to replay message. Please try again.',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsReplaying(false);
+    }
   };
 
   const handleAddHeader = () => {
@@ -113,10 +162,11 @@ export function MessageDetailDrawer() {
             </div>
             <Button
               onClick={handleReplay}
+              disabled={isReplaying}
               className="bg-emerald-600 hover:bg-emerald-700 text-white ml-4"
             >
               <Play className="h-4 w-4 mr-2" />
-              Replay
+              {isReplaying ? 'Replaying...' : 'Replay'}
             </Button>
           </div>
         </SheetHeader>

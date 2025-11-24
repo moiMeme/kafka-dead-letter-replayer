@@ -5,6 +5,7 @@ import { Label } from './ui/label';
 import useDltStore from '../store/useDltStore';
 import { useDltApi } from '../hooks/useDltApi';
 import type { Message } from '@/types';
+import type { ReplayRequest } from '../api/dltService';
 import { toast } from '../hooks/use-toast';
 import { Play, X } from 'lucide-react';
 
@@ -40,8 +41,15 @@ export function ReplayDialog() {
     setIsReplaying(true);
 
     try {
+      // Build replay requests with original message data
+      const replayRequests: ReplayRequest[] = messages.map(message => ({
+        messageId: message.id,
+        payload: message.payload, // Original payload as string
+        headers: message.headers  // Original headers
+      }));
+
       // Call the API to replay messages
-      await dltApi.replayMessages(selectedMessages);
+      await dltApi.replayMessages(replayRequests);
 
       toast({
         title: 'Replay initiated',

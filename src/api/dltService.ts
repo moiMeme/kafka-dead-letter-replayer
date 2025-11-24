@@ -16,6 +16,12 @@ export interface MessageQueryParams extends Partial<Filters> {
   pageSize?: number;
 }
 
+export interface ReplayRequest {
+  messageId: string;
+  payload: string;
+  headers: Record<string, string>;
+}
+
 export const DltApiService = (api: AxiosInstance) => ({
   // Services
   getServices: async (): Promise<Service[]> => {
@@ -89,8 +95,8 @@ export const DltApiService = (api: AxiosInstance) => ({
   },
 
   // Replay
-  replayMessages: async (messageIds: string[], headers?: Record<string, string>): Promise<void> => {
-    await api.post('/replays', { messageIds, headers });
+  replayMessages: async (requests: ReplayRequest[]): Promise<void> => {
+    await api.post('/replays', requests);
   },
 
   getReplayHistory: async (messageId: string): Promise<ReplayHistoryItem[]> => {

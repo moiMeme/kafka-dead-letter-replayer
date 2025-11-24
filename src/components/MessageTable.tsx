@@ -4,16 +4,20 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Button } from './ui/button';
 import { Checkbox } from './ui/checkbox';
 import { Badge } from './ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import useDltStore from '../store/useDltStore';
 import { ChevronLeft, ChevronRight, Play, Eye } from 'lucide-react';
 import { format } from 'date-fns';
+import { getShortErrorName, truncateText } from '../lib/formatters';
 
-const errorTypeColors = {
-  DeserializationException: 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
-  ValidationException: 'bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300',
-  TimeoutException: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
-  ServiceUnavailableException: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
-  UnknownException: 'bg-gray-100 text-gray-800 dark:bg-gray-950 dark:text-gray-300'
+const errorTypeColors: Record<string, string> = {
+  'NotFoundException': 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
+  'InternalException': 'bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300',
+  'ValidationException': 'bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300',
+  'TimeoutException': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
+  'ServiceUnavailableException': 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
+  'UnknownException': 'bg-gray-100 text-gray-800 dark:bg-gray-950 dark:text-gray-300',
+  'DeserializationException': 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
 };
 
 export function MessageTable({ messages, currentPage, totalPages, onPageChange, totalMessages }) {
@@ -61,75 +65,105 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Type</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Message</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Location</TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Cause Trace</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300 text-center">Replay Count</TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Last Replay</TableHead>
                 <TableHead className="w-32 font-semibold text-slate-700 dark:text-slate-300 text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {messages.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-12 text-slate-500 dark:text-slate-400">
+                  <TableCell colSpan={9} className="text-center py-12 text-slate-500 dark:text-slate-400">
                     No messages found. Try adjusting your filters.
                   </TableCell>
                 </TableRow>
               ) : (
-                messages.map((message) => (
-                  <TableRow
-                    key={message.id}
-                    className="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors"
-                    onClick={() => handleRowClick(message)}
-                  >
-                    <TableCell onClick={(e) => e.stopPropagation()}>
-                      <Checkbox
-                        checked={selectedMessages.includes(message.id)}
-                        onCheckedChange={() => toggleMessageSelection(message.id)}
-                      />
-                    </TableCell>
-                    <TableCell className="font-mono text-sm text-slate-900 dark:text-slate-100">{message.key}</TableCell>
-                    <TableCell className="text-slate-700 dark:text-slate-300">{message.topic}</TableCell>
-                    <TableCell className="text-slate-600 dark:text-slate-400 text-sm">
-                      {format(new Date(message.timestamp), 'MMM dd, yyyy HH:mm:ss')}
-                    </TableCell>
-                    <TableCell>
-                      <Badge className={errorTypeColors[message.errorType] || errorTypeColors.UnknownException}>
-                        {message.errorType}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-slate-700 dark:text-slate-300">{message.errorMessage}</TableCell>
-                    <TableCell className="text-slate-700 dark:text-slate-300">{message.errorLocation}</TableCell>
-                    <TableCell className="text-slate-700 dark:text-slate-300">{message.errorCauseTrace}</TableCell>
-                    <TableCell className="text-center">
-                      <span className={`font-semibold ${message.replayCount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-600'}`}>
-                        {message.replayCount}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-slate-600 dark:text-slate-400 text-sm">
-                      {message.lastReplayAt ? format(new Date(message.lastReplayAt), 'MMM dd, HH:mm') : '-'}
-                    </TableCell>
-                    <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex gap-2 justify-end">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => handleRowClick(message)}
-                          className="hover:bg-slate-100 dark:hover:bg-slate-800"
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={(e) => handleReplayClick(e, message.id)}
-                          className="hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:text-emerald-700 dark:hover:text-emerald-400"
-                        >
-                          <Play className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
+                messages.map((message) => {
+                  const shortErrorName = getShortErrorName(message.errorType);
+                  return (
+                    <TableRow
+                      key={message.id}
+                      className="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors"
+                      onClick={() => handleRowClick(message)}
+                    >
+                      <TableCell onClick={(e) => e.stopPropagation()}>
+                        <Checkbox
+                          checked={selectedMessages.includes(message.id)}
+                          onCheckedChange={() => toggleMessageSelection(message.id)}
+                        />
+                      </TableCell>
+                      <TableCell className="font-mono text-sm text-slate-900 dark:text-slate-100">
+                        {truncateText(message.key, 30)}
+                      </TableCell>
+                      <TableCell className="text-slate-700 dark:text-slate-300">{message.topic}</TableCell>
+                      <TableCell className="text-slate-600 dark:text-slate-400 text-sm">
+                        {format(new Date(message.timestamp), 'MMM dd, yyyy HH:mm:ss')}
+                      </TableCell>
+                      <TableCell>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Badge className={`cursor-help ${errorTypeColors[shortErrorName] || errorTypeColors.UnknownException}`}>
+                                {shortErrorName}
+                              </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p className="max-w-xs break-all">{message.errorType}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </TableCell>
+                      <TableCell className="text-slate-600 dark:text-slate-400 text-sm max-w-xs">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className="cursor-help">{truncateText(message.errorMessage || '-', 50)}</span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p className="max-w-md">{message.errorMessage || 'No error message'}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </TableCell>
+                      <TableCell className="text-slate-600 dark:text-slate-400 text-sm max-w-xs">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className="cursor-help">{truncateText(message.errorLocation || '-', 40)}</span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p className="max-w-md">{message.errorLocation || 'No location info'}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <span className={`font-semibold ${message.replayCount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-600'}`}>
+                          {message.replayCount}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex gap-2 justify-end">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleRowClick(message)}
+                            className="hover:bg-slate-100 dark:hover:bg-slate-800"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={(e) => handleReplayClick(e, message.id)}
+                            className="hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:text-emerald-700 dark:hover:text-emerald-400"
+                          >
+                            <Play className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
               )}
             </TableBody>
           </Table>

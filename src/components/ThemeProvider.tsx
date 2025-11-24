@@ -1,8 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-const ThemeContext = createContext({
+type ThemeContextType = {
+  theme: string;
+  setTheme: (theme: string) => void;
+};
+
+const ThemeContext = createContext<ThemeContextType>({
   theme: 'dark',
-  setTheme: () => null,
+  setTheme: () => {},
 });
 
 export function ThemeProvider({ children, defaultTheme = 'dark', storageKey = 'dlt-dashboard-theme' }) {

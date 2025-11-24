@@ -9,17 +9,20 @@ import { Label } from './ui/label';
 import useDltStore from '../store/useDltStore';
 import { useDltApi } from '../hooks/useDltApi';
 import type { ReplayHistoryItem } from '@/types';
-import { Play, FileJson, FileText, History as HistoryIcon, Plus, Trash2 } from 'lucide-react';
+import { Play, FileJson, FileText, History as HistoryIcon, Plus, Trash2, AlertCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import Editor from '@monaco-editor/react';
 import { useTheme } from './ThemeProvider';
+import { getShortErrorName, formatStacktrace, parsePayload } from '../lib/formatters';
 
-const errorTypeColors = {
-  DeserializationException: 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
-  ValidationException: 'bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300',
-  TimeoutException: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
-  ServiceUnavailableException: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
-  UnknownException: 'bg-gray-100 text-gray-800 dark:bg-gray-950 dark:text-gray-300'
+const errorTypeColors: Record<string, string> = {
+  'NotFoundException': 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
+  'InternalException': 'bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300',
+  'ValidationException': 'bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300',
+  'TimeoutException': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
+  'ServiceUnavailableException': 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
+  'UnknownException': 'bg-gray-100 text-gray-800 dark:bg-gray-950 dark:text-gray-300',
+  'DeserializationException': 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
 };
 
 export function MessageDetailDrawer() {
@@ -36,7 +39,9 @@ export function MessageDetailDrawer() {
   useEffect(() => {
     const fetchReplayHistory = async () => {
       if (selectedMessage) {
-        setEditedPayload(JSON.stringify(selectedMessage.payload, null, 2));
+        // Parse payload if it's a string
+        const parsedPayload = parsePayload(selectedMessage.payload);
+        setEditedPayload(JSON.stringify(parsedPayload, null, 2));
         setEditedHeaders({ ...selectedMessage.headers });
 
         // Fetch replay history from API
@@ -100,8 +105,8 @@ export function MessageDetailDrawer() {
                 <code className="text-sm bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded text-slate-700 dark:text-slate-300 font-mono">
                   {selectedMessage.key}
                 </code>
-                <Badge className={errorTypeColors[selectedMessage.errorType]}>
-                  {selectedMessage.errorType}
+                <Badge className={errorTypeColors[getShortErrorName(selectedMessage.errorType)] || errorTypeColors.UnknownException} title={selectedMessage.errorType}>
+                  {getShortErrorName(selectedMessage.errorType)}
                 </Badge>
               </div>
             </div>
@@ -145,6 +150,39 @@ export function MessageDetailDrawer() {
                   <div className="font-medium text-slate-900 dark:text-slate-100">{selectedMessage.replayCount}</div>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-slate-200 dark:border-slate-800 border-l-4 border-l-red-500">
+            <CardHeader>
+              <CardTitle className="text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                Error Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Error Type</div>
+                <div className="font-mono text-sm text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-900 p-2 rounded">
+                  {selectedMessage.errorType}
+                </div>
+              </div>
+              {selectedMessage.errorMessage && (
+                <div>
+                  <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Error Message</div>
+                  <div className="text-sm text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-900 p-3 rounded">
+                    {selectedMessage.errorMessage}
+                  </div>
+                </div>
+              )}
+              {selectedMessage.errorLocation && (
+                <div>
+                  <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Error Location</div>
+                  <div className="font-mono text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-900 p-2 rounded">
+                    {selectedMessage.errorLocation}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 
@@ -272,8 +310,8 @@ export function MessageDetailDrawer() {
                   <CardTitle className="text-base text-slate-900 dark:text-white">Stack Trace</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <pre className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg text-xs font-mono text-slate-700 dark:text-slate-300 overflow-x-auto">
-                    {selectedMessage.stacktrace}
+                  <pre className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg text-xs font-mono text-slate-700 dark:text-slate-300 overflow-x-auto whitespace-pre-wrap">
+                    {formatStacktrace(selectedMessage.stacktrace)}
                   </pre>
                 </CardContent>
               </Card>

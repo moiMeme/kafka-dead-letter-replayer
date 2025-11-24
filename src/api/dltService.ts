@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
-import type { Message, Service, Topic, MetricsOverview, ReplayHistoryItem, Filters } from '@/types';
+import type { Message, Service, Topic, MetricsOverview, ReplayHistoryItem, Filters, ErrorType, PaginatedResponse } from '@/types';
 
-export interface PaginatedResponse<T> {
+export interface PaginatedResponseAdapter<T> {
   data: T[];
   total: number;
   page: number;
@@ -23,59 +23,63 @@ export const DltApiService = (api: AxiosInstance) => ({
     return response.data;
   },
 
-  // Topics
+  // Topics - now included in services response, but keep this for compatibility
   getTopics: async (serviceId?: string): Promise<Topic[]> => {
-    const response = await api.get('/topics', {
-      params: serviceId ? { serviceId } : undefined,
+    if (serviceId) {
+      // Find service and return its topics
+      const servicesResponse = await api.get('/services');
+      const service = servicesResponse.data.find((s: Service) => s.id === serviceId);
+      return service?.topics || [];
+    }
+    // Return all topics from all services
+    const servicesResponse = await api.get('/services');
+    const allTopics: Topic[] = [];
+    servicesResponse.data.forEach((service: Service) => {
+      if (service.topics) {
+        allTopics.push(...service.topics);
+      }
     });
-    return response.data;
+    return allTopics;
   },
 
   // Error Types
   getErrorTypes: async (): Promise<string[]> => {
     const response = await api.get('/errorTypes');
     // Map objects to names
-    return response.data.map((item: { id: number; name: string }) => item.name);
+    return response.data.map((item: ErrorType) => item.name);
   },
 
-  // Messages - with server-side filtering and client-side pagination
-  getMessages: async (params?: MessageQueryParams): Promise<PaginatedResponse<Message>> => {
-    const { page = 1, pageSize = 20, ...filters } = params || {};
+  // Messages - with server-side pagination from Spring Boot
+  getMessages: async (params?: MessageQueryParams): Promise<PaginatedResponseAdapter<Message>> => {
+    const { page = 0, pageSize = 20, ...filters } = params || {};
 
-    // Build query params for json-server (filtering only, no pagination)
+    // Build query params for Spring Boot (page is 0-indexed)
     const queryParams: any = {
-      _sort: 'timestamp',
-      _order: 'desc'
+      page: page > 0 ? page - 1 : 0, // Convert 1-indexed to 0-indexed
+      size: pageSize,
+      sort: 'timestamp,desc'
     };
 
     // Add filters
     if (filters.serviceId) queryParams.serviceId = filters.serviceId;
     if (filters.topic) queryParams.topic = filters.topic;
     if (filters.errorType) queryParams.errorType = filters.errorType;
-    if (filters.search) queryParams.q = filters.search;
-    if (filters.searchByKey) queryParams.key_like = filters.searchByKey;
-
-    // Date range filters - json-server uses _gte and _lte
-    if (filters.dateFrom) queryParams.timestamp_gte = filters.dateFrom;
-    if (filters.dateTo) queryParams.timestamp_lte = filters.dateTo;
+    if (filters.search) queryParams.search = filters.search;
+    if (filters.searchByKey) queryParams.key = filters.searchByKey;
+    if (filters.dateFrom) queryParams.dateFrom = filters.dateFrom;
+    if (filters.dateTo) queryParams.dateTo = filters.dateTo;
 
     const response = await api.get('/messages', { params: queryParams });
 
-    // Get all filtered messages
-    const allMessages: Message[] = response.data;
-    const total = allMessages.length;
-    const totalPages = Math.ceil(total / pageSize);
-
-    // Paginate on client side
-    const startIndex = (page - 1) * pageSize;
-    const paginatedData = allMessages.slice(startIndex, startIndex + pageSize);
+    // Spring Boot returns paginated response
+    const springPage: PaginatedResponse<Message> = response.data;
 
     return {
-      data: paginatedData,
-      total,
-      page,
-      pageSize,
-      totalPages
+      data: springPage.content,
+      total: springPage.totalElements,
+      page: springPage.number + 1, // Convert back to 1-indexed
+      pageSize: springPage.size,
+      totalPages: springPage.totalPages
     };
   },
 

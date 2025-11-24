@@ -1,24 +1,15 @@
 export interface Service {
   id: string;
   name: string;
+  topics: Topic[];
 }
 
 export interface Topic {
   name: string;
 }
 
-export interface MessageHeaders {
-  'correlation-id': string;
-  'source': string;
-  'content-type': string;
-}
-
-export interface MessagePayload {
-  orderId: string;
-  userId: string;
-  amount: number;
-  currency: string;
-  status: string;
+export interface ErrorType {
+  name: string;
 }
 
 export interface Message {
@@ -28,14 +19,33 @@ export interface Message {
   topic: string;
   timestamp: string;
   errorType: string;
-  errorMessage: string
-  errorLocation: string
-  errorCauseTrace: string
+  errorMessage: string;
+  errorLocation: string;
+  errorCauseTrace: string;
   replayCount: number;
   lastReplayAt: string | null;
-  headers: MessageHeaders;
-  payload: string;
+  headers: Record<string, string>;
+  payload: string; // JSON string
   stacktrace: string;
+}
+
+export interface PaginatedResponse<T> {
+  content: T[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+  first: boolean;
+  last: boolean;
+  numberOfElements: number;
+  empty: boolean;
 }
 
 export interface Filters {

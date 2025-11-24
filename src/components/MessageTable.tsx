@@ -59,20 +59,18 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
                     onCheckedChange={handleSelectAll}
                   />
                 </TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Key</TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Topic</TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Timestamp</TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Type</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-48">Key</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-48">Topic</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-44">Timestamp</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-40">Error Type</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Message</TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Location</TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 text-center">Replay Count</TableHead>
-                <TableHead className="w-32 font-semibold text-slate-700 dark:text-slate-300 text-right">Actions</TableHead>
+                <TableHead className="w-24 font-semibold text-slate-700 dark:text-slate-300 text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {messages.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={9} className="text-center py-12 text-slate-500 dark:text-slate-400">
+                  <TableCell colSpan={7} className="text-center py-12 text-slate-500 dark:text-slate-400">
                     No messages found. Try adjusting your filters.
                   </TableCell>
                 </TableRow>
@@ -112,34 +110,10 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
                           </Tooltip>
                         </TooltipProvider>
                       </TableCell>
-                      <TableCell className="text-slate-600 dark:text-slate-400 text-sm max-w-xs">
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <span className="cursor-help">{truncateText(message.errorMessage || '-', 50)}</span>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p className="max-w-md">{message.errorMessage || 'No error message'}</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableCell>
-                      <TableCell className="text-slate-600 dark:text-slate-400 text-sm max-w-xs">
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <span className="cursor-help">{truncateText(message.errorLocation || '-', 40)}</span>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p className="max-w-md">{message.errorLocation || 'No location info'}</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <span className={`font-semibold ${message.replayCount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-600'}`}>
-                          {message.replayCount}
-                        </span>
+                      <TableCell className="text-slate-700 dark:text-slate-300 text-sm">
+                        <div className="max-w-md truncate">
+                          {message.errorMessage || '-'}
+                        </div>
                       </TableCell>
                       <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                         <div className="flex gap-2 justify-end">

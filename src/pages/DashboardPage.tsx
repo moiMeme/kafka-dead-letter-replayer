@@ -4,6 +4,7 @@ import { useDltApi } from '../hooks/useDltApi';
 import type { MetricsOverview } from '@/types';
 import { Database, TrendingUp, AlertTriangle, Server } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { getShortErrorName } from '../lib/formatters';
 
 const COLORS = ['#10b981', '#14b8a6', '#06b6d4', '#3b82f6', '#6366f1', '#8b5cf6', '#ec4899', '#f43f5e'];
 
@@ -115,7 +116,7 @@ export default function DashboardPage() {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ errorType, percent }) => `${errorType.split('Exception')[0]}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ errorType, percent }) => `${getShortErrorName(errorType)}: ${(percent * 100).toFixed(0)}%`}
                   outerRadius={100}
                   fill="#8884d8"
                   dataKey="count"
@@ -124,7 +125,15 @@ export default function DashboardPage() {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
+                  formatter={(value, name, props) => [value, getShortErrorName(props.payload.errorType)]}
+                  labelFormatter={(label) => (
+                    <div className="font-mono text-xs">
+                      Full path: {label}
+                    </div>
+                  )}
+                />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>

@@ -6,6 +6,7 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
+import { Textarea } from './ui/textarea';
 import useDltStore from '../store/useDltStore';
 import { useDltApi } from '../hooks/useDltApi';
 import type { ReplayHistoryItem } from '@/types';
@@ -96,7 +97,7 @@ export function MessageDetailDrawer() {
 
   return (
     <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
-      <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
+      <SheetContent className="w-full sm:max-w-4xl overflow-y-auto">
         <SheetHeader className="pb-6">
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -162,25 +163,41 @@ export function MessageDetailDrawer() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Error Type</div>
-                <div className="font-mono text-sm text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-900 p-2 rounded">
-                  {selectedMessage.errorType}
-                </div>
+                <Label className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Error Type</Label>
+                <Textarea
+                  value={selectedMessage.errorType}
+                  readOnly
+                  className="font-mono text-sm text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-900 resize-none h-auto min-h-[40px]"
+                />
               </div>
               {selectedMessage.errorMessage && (
                 <div>
-                  <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Error Message</div>
-                  <div className="text-sm text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-900 p-3 rounded">
-                    {selectedMessage.errorMessage}
-                  </div>
+                  <Label className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Error Message</Label>
+                  <Textarea
+                    value={selectedMessage.errorMessage}
+                    readOnly
+                    className="text-sm text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-900 resize-y min-h-[80px] max-h-[200px]"
+                  />
                 </div>
               )}
               {selectedMessage.errorLocation && (
                 <div>
-                  <div className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Error Location</div>
-                  <div className="font-mono text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-900 p-2 rounded">
-                    {selectedMessage.errorLocation}
-                  </div>
+                  <Label className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Error Location</Label>
+                  <Textarea
+                    value={selectedMessage.errorLocation}
+                    readOnly
+                    className="font-mono text-xs text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-900 resize-y min-h-[60px] max-h-[150px]"
+                  />
+                </div>
+              )}
+              {selectedMessage.stacktrace && (
+                <div>
+                  <Label className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1">Stack Trace</Label>
+                  <Textarea
+                    value={formatStacktrace(selectedMessage.stacktrace)}
+                    readOnly
+                    className="font-mono text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900 resize-y min-h-[200px] max-h-[400px] whitespace-pre"
+                  />
                 </div>
               )}
             </CardContent>
@@ -302,17 +319,6 @@ export function MessageDetailDrawer() {
                   <p className="text-xs text-slate-500 dark:text-slate-500 mt-3">
                     Modified headers will be sent when replaying this message.
                   </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-slate-200 dark:border-slate-800 mt-4">
-                <CardHeader>
-                  <CardTitle className="text-base text-slate-900 dark:text-white">Stack Trace</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <pre className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg text-xs font-mono text-slate-700 dark:text-slate-300 overflow-x-auto whitespace-pre-wrap">
-                    {formatStacktrace(selectedMessage.stacktrace)}
-                  </pre>
                 </CardContent>
               </Card>
             </TabsContent>

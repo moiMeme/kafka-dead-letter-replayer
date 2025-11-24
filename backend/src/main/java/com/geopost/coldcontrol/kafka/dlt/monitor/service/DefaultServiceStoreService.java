@@ -17,11 +17,14 @@ public class DefaultServiceStoreService implements ServiceStoreService {
     @Override
     @Cacheable(value = "services", key = "'all'")
     public List<ServiceDTO> findServices() {
-        return store.keySet()
+        return store.entrySet()
                 .stream()
-                .map(serviceId -> ServiceDTO.builder()
-                        .id(serviceId)
-                        .name(serviceId)
+                .map(entry -> ServiceDTO.builder()
+                        .id(entry.getKey())
+                        .name(entry.getKey())
+                        .topics(entry.getValue().stream().map(topicName -> TopicDTO.builder()
+                                .name(topicName)
+                                .build()).toList())
                         .build())
                 .toList();
     }

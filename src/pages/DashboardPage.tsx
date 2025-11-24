@@ -94,10 +94,14 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-xl font-bold text-slate-900 dark:text-white truncate">
-              {metrics.topServices[0]?.serviceName || 'N/A'}
+              {metrics.topServices && metrics.topServices.length > 0
+                ? (metrics.topServices[0].serviceName || 'Unknown Service')
+                : 'No data'}
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">
-              {metrics.topServices[0]?.count || 0} messages
+              {metrics.topServices && metrics.topServices.length > 0
+                ? `${metrics.topServices[0].count || 0} messages`
+                : 'No messages recorded'}
             </p>
           </CardContent>
         </Card>
@@ -118,7 +122,6 @@ export default function DashboardPage() {
                   labelLine={false}
                   label={({ errorType, percent }) => `${getShortErrorName(errorType)}: ${(percent * 100).toFixed(0)}%`}
                   outerRadius={100}
-                  fill="#8884d8"
                   dataKey="count"
                 >
                   {metrics.dltByErrorType.map((entry, index) => (
@@ -127,12 +130,25 @@ export default function DashboardPage() {
                 </Pie>
                 <Tooltip
                   contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
-                  formatter={(value, name, props) => [value, getShortErrorName(props.payload.errorType)]}
-                  labelFormatter={(label) => (
-                    <div className="font-mono text-xs">
-                      Full path: {label}
-                    </div>
-                  )}
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      const data = payload[0].payload;
+                      return (
+                        <div className="bg-white dark:bg-slate-800 p-3 border border-slate-200 dark:border-slate-700 rounded shadow-lg">
+                          <p className="font-semibold text-slate-900 dark:text-white mb-1">
+                            {getShortErrorName(data.errorType)}
+                          </p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 mb-2 font-mono break-all max-w-xs">
+                            {data.errorType}
+                          </p>
+                          <p className="text-sm text-slate-700 dark:text-slate-300">
+                            Count: <span className="font-semibold">{data.count}</span>
+                          </p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
                 />
               </PieChart>
             </ResponsiveContainer>

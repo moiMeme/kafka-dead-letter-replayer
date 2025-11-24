@@ -8,7 +8,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/t
 import useDltStore from '../store/useDltStore';
 import { ChevronLeft, ChevronRight, Play, Eye } from 'lucide-react';
 import { format } from 'date-fns';
-import { getShortErrorName, truncateText } from '../lib/formatters';
+import { getShortErrorName } from '../lib/formatters';
 
 const errorTypeColors: Record<string, string> = {
   'NotFoundException': 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
@@ -59,12 +59,12 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
                     onCheckedChange={handleSelectAll}
                   />
                 </TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-48">Key</TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-48">Topic</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-64">Key</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-52">Topic</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-44">Timestamp</TableHead>
-                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-40">Error Type</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300 w-36">Error Type</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Message</TableHead>
-                <TableHead className="w-24 font-semibold text-slate-700 dark:text-slate-300 text-right">Actions</TableHead>
+                <TableHead className="w-20 font-semibold text-slate-700 dark:text-slate-300 text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -89,11 +89,13 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
                           onCheckedChange={() => toggleMessageSelection(message.id)}
                         />
                       </TableCell>
-                      <TableCell className="font-mono text-sm text-slate-900 dark:text-slate-100">
-                        {truncateText(message.key, 30)}
+                      <TableCell className="font-mono text-xs text-slate-900 dark:text-slate-100 break-all">
+                        <div className="max-w-xs">
+                          {message.key}
+                        </div>
                       </TableCell>
-                      <TableCell className="text-slate-700 dark:text-slate-300">{message.topic}</TableCell>
-                      <TableCell className="text-slate-600 dark:text-slate-400 text-sm">
+                      <TableCell className="text-slate-700 dark:text-slate-300 text-sm">{message.topic}</TableCell>
+                      <TableCell className="text-slate-600 dark:text-slate-400 text-xs whitespace-nowrap">
                         {format(new Date(message.timestamp), 'MMM dd, yyyy HH:mm:ss')}
                       </TableCell>
                       <TableCell>
@@ -110,28 +112,28 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
                           </Tooltip>
                         </TooltipProvider>
                       </TableCell>
-                      <TableCell className="text-slate-700 dark:text-slate-300 text-sm">
-                        <div className="max-w-md truncate">
+                      <TableCell className="text-slate-700 dark:text-slate-300 text-xs">
+                        <div className="max-w-xl line-clamp-2 leading-relaxed">
                           {message.errorMessage || '-'}
                         </div>
                       </TableCell>
                       <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
-                        <div className="flex gap-2 justify-end">
+                        <div className="flex gap-1 justify-end">
                           <Button
                             size="sm"
                             variant="ghost"
                             onClick={() => handleRowClick(message)}
-                            className="hover:bg-slate-100 dark:hover:bg-slate-800"
+                            className="h-7 w-7 p-0 hover:bg-slate-100 dark:hover:bg-slate-800"
                           >
-                            <Eye className="h-4 w-4" />
+                            <Eye className="h-3.5 w-3.5" />
                           </Button>
                           <Button
                             size="sm"
                             variant="ghost"
                             onClick={(e) => handleReplayClick(e, message.id)}
-                            className="hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:text-emerald-700 dark:hover:text-emerald-400"
+                            className="h-7 w-7 p-0 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:text-emerald-700 dark:hover:text-emerald-400"
                           >
-                            <Play className="h-4 w-4" />
+                            <Play className="h-3.5 w-3.5" />
                           </Button>
                         </div>
                       </TableCell>

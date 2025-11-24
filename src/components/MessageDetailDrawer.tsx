@@ -85,12 +85,21 @@ export function MessageDetailDrawer() {
         return;
       }
 
+      // Debug logging
+      console.log('=== REPLAY DEBUG ===');
+      console.log('Original payload:', selectedMessage.payload);
+      console.log('Edited payload:', payloadToSend);
+      console.log('Original headers:', selectedMessage.headers);
+      console.log('Edited headers:', editedHeaders);
+
       // Build replay request with edited data
       const replayRequest: ReplayRequest = {
         messageId: selectedMessage.id,
         payload: payloadToSend,
-        headers: editedHeaders
+        headers: { ...editedHeaders } // Create a new object to ensure it's not a reference
       };
+
+      console.log('Replay request:', JSON.stringify(replayRequest, null, 2));
 
       // Call the API to replay message with edited data
       await dltApi.replayMessages([replayRequest]);
@@ -120,28 +129,40 @@ export function MessageDetailDrawer() {
 
   const handleAddHeader = () => {
     if (newHeaderKey.trim() && newHeaderValue.trim()) {
-      setEditedHeaders(prev => ({
-        ...prev,
-        [newHeaderKey.trim()]: newHeaderValue.trim()
-      }));
+      console.log('Adding header:', newHeaderKey.trim(), '=', newHeaderValue.trim());
+      setEditedHeaders(prev => {
+        const updated = {
+          ...prev,
+          [newHeaderKey.trim()]: newHeaderValue.trim()
+        };
+        console.log('Updated headers after add:', updated);
+        return updated;
+      });
       setNewHeaderKey('');
       setNewHeaderValue('');
     }
   };
 
   const handleDeleteHeader = (key: string) => {
+    console.log('Deleting header:', key);
     setEditedHeaders(prev => {
       const newHeaders = { ...prev };
       delete newHeaders[key];
+      console.log('Updated headers after delete:', newHeaders);
       return newHeaders;
     });
   };
 
   const handleHeaderValueChange = (key: string, value: string) => {
-    setEditedHeaders(prev => ({
-      ...prev,
-      [key]: value
-    }));
+    console.log('Changing header value:', key, '=', value);
+    setEditedHeaders(prev => {
+      const updated = {
+        ...prev,
+        [key]: value
+      };
+      console.log('Updated headers after change:', updated);
+      return updated;
+    });
   };
 
   return (
@@ -281,7 +302,10 @@ export function MessageDetailDrawer() {
                       language="json"
                       theme={theme === 'dark' ? 'vs-dark' : 'light'}
                       value={editedPayload}
-                      onChange={(value) => setEditedPayload(value || '')}
+                      onChange={(value) => {
+                        console.log('Monaco Editor onChange called, new value length:', value?.length);
+                        setEditedPayload(value || '');
+                      }}
                       options={{
                         minimap: { enabled: false },
                         scrollBeyondLastLine: false,

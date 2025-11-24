@@ -96,7 +96,10 @@ export const DltApiService = (api: AxiosInstance) => ({
 
   // Replay
   replayMessages: async (requests: ReplayRequest[]): Promise<void> => {
-    await api.post('/replays', requests);
+    console.log('API Service - Sending replay requests:', JSON.stringify(requests, null, 2));
+    const response = await api.post('/replays', requests);
+    console.log('API Service - Replay response status:', response.status);
+    return response.data;
   },
 
   getReplayHistory: async (messageId: string): Promise<ReplayHistoryItem[]> => {

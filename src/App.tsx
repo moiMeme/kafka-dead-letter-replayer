@@ -11,7 +11,7 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark">
       <ApiProvider>
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
           <Layout>
             <Routes>
               <Route path="/" element={<DashboardPage />} />

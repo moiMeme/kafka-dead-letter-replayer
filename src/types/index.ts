@@ -101,3 +101,11 @@ export interface DltStore {
   replayDialogOpen: boolean;
   setReplayDialogOpen: (open: boolean) => void;
 }
+
+export type ExceptionGroup =
+    | "REDIS"
+    | "KAFKA"
+    | "POSTGRES"
+    | "REST"
+    | "GEOPOST"
+    | "UNKNOWN";

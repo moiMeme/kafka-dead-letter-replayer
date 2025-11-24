@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import { Card, CardContent } from './ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table';
 import { Button } from './ui/button';
@@ -9,6 +9,9 @@ import useDltStore from '../store/useDltStore';
 import { ChevronLeft, ChevronRight, Play, Eye } from 'lucide-react';
 import { format } from 'date-fns';
 import { getShortErrorName } from '../lib/formatters';
+import {useTheme} from "@/components/ThemeProvider.tsx";
+import {getExceptionColor, getGeopostColor, isGeopostException} from "@/lib/utils.ts";
+import {Message} from "@/types";
 
 const errorTypeColors: Record<string, string> = {
   'NotFoundException': 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
@@ -45,6 +48,23 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
       setSelectedMessages([...selectedMessages, ...newIds]);
     }
   };
+
+  const { theme } = useTheme();
+
+  const exceptionColors = useMemo(() => {
+    if (!messages) return {};
+
+    const map: Record<string, string> = {};
+
+    messages.forEach( (m : Message) => {
+      map[m.errorType] = getExceptionColor(
+            m.errorType,
+            theme === "dark" ? "dark" : "light"
+      );
+    });
+
+    return map;
+  }, [theme]);
 
   return (
     <Card className="border-slate-200 dark:border-slate-800">
@@ -102,7 +122,7 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
-                              <Badge className={`cursor-help ${errorTypeColors[shortErrorName] || errorTypeColors.UnknownException}`}>
+                              <Badge className={`${exceptionColors[message.errorType]}`}>
                                 {shortErrorName}
                               </Badge>
                             </TooltipTrigger>

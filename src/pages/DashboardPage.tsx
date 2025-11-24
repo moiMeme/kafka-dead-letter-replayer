@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { useDltApi } from '../hooks/useDltApi';
 import type { MetricsOverview } from '@/types';
@@ -37,21 +37,20 @@ export default function DashboardPage() {
   const [metrics, setMetrics] = useState<MetricsOverview | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const [colors, setColors] = useState<string[]>();
+  //const [colors, setColors] = useState<string[]>();
 
   const { theme } = useTheme();
-
 
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
         const data = await dltApi.getMetricsOverview();
         setMetrics(data);
-        setColors(
+        /*setColors(
             generateThemeColors(
                 data.dltByErrorType.length,
                 theme === "dark" ? "dark" : "light"
-            ));
+            ));*/
       } catch (error) {
         console.error('Failed to fetch metrics:', error);
       } finally {
@@ -61,6 +60,14 @@ export default function DashboardPage() {
 
     fetchMetrics();
   }, [dltApi]);
+
+  const colors = useMemo(() => {
+    if (!metrics) return [];
+    return generateThemeColors(
+        metrics.dltByErrorType.length,
+        theme === "dark" ? "dark" : "light"
+    );
+  }, [metrics, theme]);
 
   if (loading || !metrics) {
     return (
@@ -190,19 +197,6 @@ export default function DashboardPage() {
                     }}
                 />
               </PieChart>
-              <div className="flex flex-wrap gap-3">
-                {metrics.dltByErrorType.map((item, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <div
-                          className="w-3 h-3 rounded-sm"
-                          style={{ backgroundColor: colors[index] }}
-                      />
-                      <span className="text-sm">
-              {getShortErrorName(item.errorType)} ({item.count})
-            </span>
-                    </div>
-                ))}
-              </div>
             </ResponsiveContainer>
           </CardContent>
         </Card>

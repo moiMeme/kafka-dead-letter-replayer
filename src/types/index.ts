@@ -97,9 +97,12 @@ export interface DltStore {
   setSelectedMessages: (messages: string[]) => void;
   toggleMessageSelection: (messageId: string) => void;
   clearSelection: () => void;
-  
+
   replayDialogOpen: boolean;
   setReplayDialogOpen: (open: boolean) => void;
+
+  refreshTrigger: number;
+  triggerRefresh: () => void;
 }
 
 export type ExceptionGroup =

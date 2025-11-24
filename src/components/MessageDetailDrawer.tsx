@@ -31,7 +31,7 @@ const errorTypeColors: Record<string, string> = {
 export function MessageDetailDrawer() {
   const { theme } = useTheme();
   const dltApi = useDltApi();
-  const { selectedMessage, drawerOpen, setDrawerOpen } = useDltStore();
+  const { selectedMessage, drawerOpen, setDrawerOpen, triggerRefresh } = useDltStore();
   const [editedPayload, setEditedPayload] = useState('');
   const [editedHeaders, setEditedHeaders] = useState<Record<string, string>>({});
   const [newHeaderKey, setNewHeaderKey] = useState('');
@@ -113,6 +113,9 @@ export function MessageDetailDrawer() {
       // Refresh replay history
       const history = await dltApi.getReplayHistory(selectedMessage.id);
       setReplayHistory(history);
+
+      // Trigger message list refresh
+      triggerRefresh();
 
       setDrawerOpen(false);
     } catch (error) {

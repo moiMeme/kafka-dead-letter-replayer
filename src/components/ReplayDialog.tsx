@@ -11,7 +11,7 @@ import { Play, X } from 'lucide-react';
 
 export function ReplayDialog() {
   const dltApi = useDltApi();
-  const { replayDialogOpen, setReplayDialogOpen, selectedMessages, clearSelection } = useDltStore();
+  const { replayDialogOpen, setReplayDialogOpen, selectedMessages, clearSelection, triggerRefresh } = useDltStore();
   const [isReplaying, setIsReplaying] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
@@ -56,6 +56,9 @@ export function ReplayDialog() {
         description: `${selectedMessages.length} message${selectedMessages.length > 1 ? 's' : ''} replayed successfully. History saved by API.`,
         variant: 'default'
       });
+
+      // Trigger message list refresh
+      triggerRefresh();
 
       setReplayDialogOpen(false);
       clearSelection();

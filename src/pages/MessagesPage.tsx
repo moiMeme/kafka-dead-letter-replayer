@@ -17,7 +17,7 @@ export default function MessagesPage() {
   const [totalMessages, setTotalMessages] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
-  const { selectedService, selectedTopic, filters, selectedMessages, clearSelection, setReplayDialogOpen } = useDltStore();
+  const { selectedService, selectedTopic, filters, selectedMessages, clearSelection, setReplayDialogOpen, refreshTrigger } = useDltStore();
 
   // Fetch messages whenever page or filters change
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function MessagesPage() {
     };
 
     fetchMessages();
-  }, [dltApi, currentPage, pageSize, selectedService, selectedTopic, filters]);
+  }, [dltApi, currentPage, pageSize, selectedService, selectedTopic, filters, refreshTrigger]);
 
   // Reset to page 1 when filters change
   useEffect(() => {

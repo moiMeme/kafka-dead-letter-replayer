@@ -51,9 +51,12 @@ const useDltStore = create<DltStore>((set) => ({
     };
   }),
   clearSelection: () => set({ selectedMessages: [] }),
-  
+
   replayDialogOpen: false,
-  setReplayDialogOpen: (open) => set({ replayDialogOpen: open })
+  setReplayDialogOpen: (open) => set({ replayDialogOpen: open }),
+
+  refreshTrigger: 0,
+  triggerRefresh: () => set((state) => ({ refreshTrigger: state.refreshTrigger + 1 }))
 }));
 
 export default useDltStore;

@@ -1,0 +1,206 @@
+spring:
+  application:
+    name: kafka-dlt-monitor
+  kafka:
+    bootstrap-servers: 127.0.0.1:29092,127.0.0.1:39092,127.0.0.1:49092
+    properties:
+      schema.registry.url: http://127.0.0.1:8081
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cold_control
+    username: cold_control
+    password: 4xwGwg==
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      connection-timeout: 300000
+      leak-detection-threshold: 300000
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    database: postgresql
+    properties:
+      hibernate:
+        boot:
+          allow_jdbc_metadata_access: false
+        jdbc:
+          batch_size: 1000
+        order_inserts: true
+        order_updates: true
+  flyway:
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 1.0
+    baseline-description: Baseline
+    placeholders:
+      defaultSchema: public
+      user: cold_control
+    schemas: public
+  cloud:
+    config:
+      enabled: false
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: 8183
+  servlet:
+    context-path: /api/cold-control
+
+logging:
+  level:
+    com:
+      geopost:
+        coldcontrol: DEBUG
+
+
+management:
+  tracing:
+    enabled: true
+    propagation:
+      type: b3
+    sampling:
+      probability: 1.0
+    baggage:
+      correlation:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      discovery:
+        enabled: true
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+  server:
+    port: 8082
+
+kafka:
+  dlt:
+    monitor:
+      store:
+        event-service:
+          - coldcontrol.in.shpnots
+          - coldcontrol.in.ttevents
+        alert-service:
+          - coldcontrol.in.parcel.alerts
+        temperature-service:
+          - coldcontrol.in.temperatures
+        persistence-service:
+          - coldcontrol.container.details
+          - coldcontrol.out.parcel.alerts
+          - coldcontrol.parcel.details
+          - coldcontrol.parcel.temperatures.aggregated-persistence
+        temperature-aggregator-service:
+          - coldcontrol.parcel.temperatures
+
+# noinspection SpringBootApplicationYaml
+coldcontrol:
+  kafka:
+    partitions: 12
+    replicas: 3
+    create-dlt-topics: false
+    kafka-admin:
+      enabled: true
+      topic:
+        type: IN
+        name: coldcontrol.in.kafka.commands
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.admin.commands.AdminCommand
+    topics:
+      - type: IN
+        name: coldcontrol.in.parcel.alerts-dlt
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.alert.RunParcelAlerterCmd
+      - type: IN
+        name: coldcontrol.in.shpnots-dlt
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.events.Shpnot
+      - type: IN
+        name: coldcontrol.in.ttevents-dlt
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.events.TTEvent
+      - type: IN
+        name: coldcontrol.parcel.details-dlt
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.persistence.parcel.ParcelPersistenceRequest
+      - type: IN
+        name: coldcontrol.parcel.temperatures.aggregated-persistence-dlt
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.persistence.temperature.ParcelTemperaturePersistence
+      - type: IN
+        name: coldcontrol.container.details-dlt
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.persistence.association.ContainerAssociationPersistenceRequest
+      - type: IN
+        name: coldcontrol.out.parcel.alerts-dlt
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.persistence.alert.AlertPersistenceRequest
+      - type: IN
+        name: coldcontrol.in.temperatures-dlt
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.sensor.SensorMeasure
+      - type: IN
+        name: coldcontrol.parcel.temperatures-dlt-dlt
+        compact: false
+        record-class: com.geopost.coldcontrol.common.kafka.avro.temperature.parcel.ParcelTemperatureRequest
+    consumers:
+      - id: parcel-alert-dlt-consumer
+        group-id: parcel-alert-dlt-consumer
+        topics:
+          - in-topic: coldcontrol.in.parcel.alerts-dlt
+        concurrency: 3
+        handler-class: com.geopost.coldcontrol.kafka.dlt.monitor.handler.RunParcelAlerterCmdDLTHandler
+      - id: shpnot-dlt-consumer
+        group-id: shpnot-dlt-consumer
+        topics:
+          - in-topic: coldcontrol.in.shpnots-dlt
+        concurrency: 3
+        handler-class: com.geopost.coldcontrol.kafka.dlt.monitor.handler.ShpnotDLTHandler
+      - id: ttevent-dlt-consumer
+        group-id: ttevent-dlt-consumer
+        topics:
+          - in-topic: coldcontrol.in.ttevents-dlt
+        concurrency: 3
+        handler-class: com.geopost.coldcontrol.kafka.dlt.monitor.handler.TTEventDLTHandler
+      - id: parcel-details-dlt-consumer
+        group-id: parcel-details-dlt-consumer
+        topics:
+          - in-topic: coldcontrol.parcel.details-dlt
+        concurrency: 3
+        handler-class: com.geopost.coldcontrol.kafka.dlt.monitor.handler.ParcelPersistenceRequestDLTHandler
+      - id: parcel-temperatures.aggregated-dlt-consumer
+        group-id: parcel-temperatures.aggregated-dlt-consumer
+        topics:
+          - in-topic: coldcontrol.parcel.temperatures.aggregated-persistence-dlt
+        concurrency: 3
+        handler-class: com.geopost.coldcontrol.kafka.dlt.monitor.handler.ParcelTemperaturePersistenceDLTHandler
+      - id: container-details-dlt-consumer
+        group-id: container-details-dlt-consumer
+        topics:
+          - in-topic: coldcontrol.container.details-dlt
+        concurrency: 3
+        handler-class: com.geopost.coldcontrol.kafka.dlt.monitor.handler.ContainerAssociationPersistenceRequestDLTHandler
+      - id: parcel-alert-out-dlt-consumer
+        group-id: parcel-alert-out-dlt-consumer
+        topics:
+          - in-topic: coldcontrol.out.parcel.alerts-dlt
+        concurrency: 3
+        handler-class: com.geopost.coldcontrol.kafka.dlt.monitor.handler.AlertPersistenceRequestDLTHandler
+      - id: temperature-in-dlt-consumer
+        group-id: temperature-in-dlt-consumer
+        topics:
+          - in-topic: coldcontrol.in.temperatures-dlt
+        concurrency: 3
+        handler-class: com.geopost.coldcontrol.kafka.dlt.monitor.handler.SensorMeasureDLTHandler
+      - id: parcel-temperature-dlt-consumer
+        group-id: parcel-temperature-dlt-consumer
+        topics:
+          - in-topic: coldcontrol.parcel.temperatures-dlt-dlt
+        concurrency: 3
+        handler-class: com.geopost.coldcontrol.kafka.dlt.monitor.handler.ParcelTemperatureRequestDLTHandler

@@ -59,6 +59,9 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Topic</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Timestamp</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Type</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Message</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Location</TableHead>
+                <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Error Cause Trace</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300 text-center">Replay Count</TableHead>
                 <TableHead className="font-semibold text-slate-700 dark:text-slate-300">Last Replay</TableHead>
                 <TableHead className="w-32 font-semibold text-slate-700 dark:text-slate-300 text-right">Actions</TableHead>
@@ -94,6 +97,9 @@ export function MessageTable({ messages, currentPage, totalPages, onPageChange, 
                         {message.errorType}
                       </Badge>
                     </TableCell>
+                    <TableCell className="text-slate-700 dark:text-slate-300">{message.errorMessage}</TableCell>
+                    <TableCell className="text-slate-700 dark:text-slate-300">{message.errorLocation}</TableCell>
+                    <TableCell className="text-slate-700 dark:text-slate-300">{message.errorCauseTrace}</TableCell>
                     <TableCell className="text-center">
                       <span className={`font-semibold ${message.replayCount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-600'}`}>
                         {message.replayCount}

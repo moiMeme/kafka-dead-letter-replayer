@@ -28,10 +28,13 @@ export interface Message {
   topic: string;
   timestamp: string;
   errorType: string;
+  errorMessage: string
+  errorLocation: string
+  errorCauseTrace: string
   replayCount: number;
   lastReplayAt: string | null;
   headers: MessageHeaders;
-  payload: MessagePayload;
+  payload: string;
   stacktrace: string;
 }
 

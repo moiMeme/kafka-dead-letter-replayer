@@ -62,7 +62,7 @@ export interface Filters {
 export interface MetricsOverview {
   totalDltMessages: number;
   dltLast24h: number;
-  topServices: Array<{ serviceName: string; count: number }>;
+  topServices: Array<{ serviceId: string; count: number }>;
   dltByTopic: Array<{ topic: string; count: number }>;
   dltByErrorType: Array<{ errorType: string; count: number }>;
   dltByTime: Array<{ date: string; count: number }>;

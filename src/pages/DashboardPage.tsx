@@ -5,19 +5,53 @@ import type { MetricsOverview } from '@/types';
 import { Database, TrendingUp, AlertTriangle, Server } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import { getShortErrorName } from '../lib/formatters';
+import {useTheme} from "../components/ThemeProvider.tsx";
+import {generateThemeColors} from "../lib/utils.ts";
 
-const COLORS = ['#10b981', '#14b8a6', '#06b6d4', '#3b82f6', '#6366f1', '#8b5cf6', '#ec4899', '#f43f5e'];
+export const COLORS = [
+  "#4C78A8", // bleu
+  "#F58518", // orange
+  "#E45756", // rouge
+  "#72B7B2", // turquoise
+  "#54A24B", // vert
+  "#B279A2", // violet
+  "#FF9DA7", // rose clair
+  "#9C755F", // brun doux
+  "#BAB0AC", // gris chaud
+  "#6A5ACD", // bleu-violet (SlateBlue)
+  "#F7C325", // jaune doré
+  "#59A14F", // vert moyen (color-blind friendly)
+  "#EDC948", // jaune doux (ColorBrewer)
+  "#AF7AA1", // mauve doux
+  "#FF8C61", // corail foncé
+  "#5DA5DA", // bleu clair (Vega palette)
+  "#B2766B", // terre cuite
+  "#8CD17D", // vert pastel vif
+  "#F17CB0", // rose soutenu
+  "#B4B4B4", // gris neutre
+  "#D4A6C8", // rose-lavande
+];
 
 export default function DashboardPage() {
   const dltApi = useDltApi();
   const [metrics, setMetrics] = useState<MetricsOverview | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const [colors, setColors] = useState<string[]>();
+
+  const { theme } = useTheme();
+
+
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
         const data = await dltApi.getMetricsOverview();
         setMetrics(data);
+        setColors(
+            generateThemeColors(
+                data.dltByErrorType.length,
+                theme === "dark" ? "dark" : "light"
+            ));
       } catch (error) {
         console.error('Failed to fetch metrics:', error);
       } finally {
@@ -95,7 +129,7 @@ export default function DashboardPage() {
           <CardContent>
             <div className="text-xl font-bold text-slate-900 dark:text-white truncate">
               {metrics.topServices && metrics.topServices.length > 0
-                ? (metrics.topServices[0].serviceName || 'Unknown Service')
+                ? (metrics.topServices[0].serviceId || 'N/A')
                 : 'No data'}
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">
@@ -125,32 +159,50 @@ export default function DashboardPage() {
                   dataKey="count"
                 >
                   {metrics.dltByErrorType.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={`cell-${index}`} fill={colors[index]} />
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
-                  content={({ active, payload }) => {
-                    if (active && payload && payload.length) {
-                      const data = payload[0].payload;
-                      return (
-                        <div className="bg-white dark:bg-slate-800 p-3 border border-slate-200 dark:border-slate-700 rounded shadow-lg">
-                          <p className="font-semibold text-slate-900 dark:text-white mb-1">
-                            {getShortErrorName(data.errorType)}
-                          </p>
-                          <p className="text-xs text-slate-600 dark:text-slate-400 mb-2 font-mono break-all max-w-xs">
-                            {data.errorType}
-                          </p>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">
-                            Count: <span className="font-semibold">{data.count}</span>
-                          </p>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
+                    contentStyle={{
+                      backgroundColor: theme === "dark"
+                          ? "hsl(var(--background))"
+                          : "white",
+                      border: "1px solid hsl(var(--border))",
+                    }}
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const data = payload[0].payload;
+                        return (
+                            <div className="bg-white dark:bg-slate-800 p-3 border border-slate-200 dark:border-slate-700 rounded shadow-lg">
+                              <p className="font-semibold text-slate-900 dark:text-white mb-1">
+                                {getShortErrorName(data.errorType)}
+                              </p>
+                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2 font-mono break-all max-w-xs">
+                                {data.errorType}
+                              </p>
+                              <p className="text-sm text-slate-700 dark:text-slate-300">
+                                Count: <span className="font-semibold">{data.count}</span>
+                              </p>
+                            </div>
+                        );
+                      }
+                      return null;
+                    }}
                 />
               </PieChart>
+              <div className="flex flex-wrap gap-3">
+                {metrics.dltByErrorType.map((item, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div
+                          className="w-3 h-3 rounded-sm"
+                          style={{ backgroundColor: colors[index] }}
+                      />
+                      <span className="text-sm">
+              {getShortErrorName(item.errorType)} ({item.count})
+            </span>
+                    </div>
+                ))}
+              </div>
             </ResponsiveContainer>
           </CardContent>
         </Card>
@@ -163,15 +215,15 @@ export default function DashboardPage() {
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={metrics.dltByTopic}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-800" />
-                <XAxis 
-                  dataKey="topic" 
-                  angle={-45} 
-                  textAnchor="end" 
-                  height={100} 
+                <XAxis
+                  dataKey="topic"
+                  angle={-45}
+                  textAnchor="end"
+                  height={100}
                   className="text-xs fill-slate-600 dark:fill-slate-400"
                 />
                 <YAxis className="fill-slate-600 dark:fill-slate-400" />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
                 />
                 <Bar dataKey="count" fill="#10b981" radius={[8, 8, 0, 0]} />
@@ -189,21 +241,21 @@ export default function DashboardPage() {
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={metrics.dltByTime}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-slate-200 dark:stroke-slate-800" />
-              <XAxis 
-                dataKey="date" 
+              <XAxis
+                dataKey="date"
                 className="text-sm fill-slate-600 dark:fill-slate-400"
               />
               <YAxis className="fill-slate-600 dark:fill-slate-400" />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
               />
               <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="count" 
-                stroke="#14b8a6" 
-                strokeWidth={3} 
-                dot={{ fill: '#14b8a6', r: 6 }} 
+              <Line
+                type="monotone"
+                dataKey="count"
+                stroke="#14b8a6"
+                strokeWidth={3}
+                dot={{ fill: '#14b8a6', r: 6 }}
                 activeDot={{ r: 8 }}
               />
             </LineChart>

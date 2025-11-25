@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Textarea } from './ui/textarea';
+import React, {useEffect, useState} from 'react';
+import {Sheet, SheetContent, SheetHeader, SheetTitle} from './ui/sheet';
+import {Tabs, TabsContent, TabsList, TabsTrigger} from './ui/tabs';
+import {Card, CardContent, CardHeader, CardTitle} from './ui/card';
+import {Badge} from './ui/badge';
+import {Button} from './ui/button';
+import {Input} from './ui/input';
+import {Label} from './ui/label';
+import {Textarea} from './ui/textarea';
 import useDltStore from '../store/useDltStore';
-import { useDltApi } from '../hooks/useDltApi';
-import type { ReplayHistoryItem } from '@/types';
-import { Play, FileJson, FileText, History as HistoryIcon, Plus, Trash2, AlertCircle } from 'lucide-react';
-import { format } from 'date-fns';
+import {useDltApi} from '../hooks/useDltApi';
+import type {ReplayHistoryItem} from '@/types';
+import {AlertCircle, FileJson, FileText, History as HistoryIcon, Play, Plus, Trash2} from 'lucide-react';
+import {format} from 'date-fns';
 import Editor from '@monaco-editor/react';
-import { useTheme } from './ThemeProvider';
-import { getShortErrorName, formatStacktrace, parsePayload } from '../lib/formatters';
-import type { ReplayRequest } from '../api/dltService';
-import { toast } from '../hooks/use-toast';
+import {useTheme} from './ThemeProvider';
+import {formatStacktrace, getShortErrorName, parsePayload} from '../lib/formatters';
+import type {ReplayRequest} from '../api/dltService';
+import {toast} from '../hooks/use-toast';
 
 const errorTypeColors: Record<string, string> = {
   'NotFoundException': 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
@@ -85,21 +85,12 @@ export function MessageDetailDrawer() {
         return;
       }
 
-      // Debug logging
-      console.log('=== REPLAY DEBUG ===');
-      console.log('Original payload:', selectedMessage.payload);
-      console.log('Edited payload:', payloadToSend);
-      console.log('Original headers:', selectedMessage.headers);
-      console.log('Edited headers:', editedHeaders);
-
       // Build replay request with edited data
       const replayRequest: ReplayRequest = {
         messageId: selectedMessage.id,
         payload: payloadToSend,
         headers: { ...editedHeaders } // Create a new object to ensure it's not a reference
       };
-
-      console.log('Replay request:', JSON.stringify(replayRequest, null, 2));
 
       // Call the API to replay message with edited data
       await dltApi.replayMessages([replayRequest]);
@@ -132,14 +123,11 @@ export function MessageDetailDrawer() {
 
   const handleAddHeader = () => {
     if (newHeaderKey.trim() && newHeaderValue.trim()) {
-      console.log('Adding header:', newHeaderKey.trim(), '=', newHeaderValue.trim());
       setEditedHeaders(prev => {
-        const updated = {
+        return {
           ...prev,
           [newHeaderKey.trim()]: newHeaderValue.trim()
         };
-        console.log('Updated headers after add:', updated);
-        return updated;
       });
       setNewHeaderKey('');
       setNewHeaderValue('');
@@ -147,23 +135,19 @@ export function MessageDetailDrawer() {
   };
 
   const handleDeleteHeader = (key: string) => {
-    console.log('Deleting header:', key);
     setEditedHeaders(prev => {
       const newHeaders = { ...prev };
       delete newHeaders[key];
-      console.log('Updated headers after delete:', newHeaders);
       return newHeaders;
     });
   };
 
   const handleHeaderValueChange = (key: string, value: string) => {
-    console.log('Changing header value:', key, '=', value);
     setEditedHeaders(prev => {
       const updated = {
         ...prev,
         [key]: value
       };
-      console.log('Updated headers after change:', updated);
       return updated;
     });
   };
@@ -306,7 +290,6 @@ export function MessageDetailDrawer() {
                       theme={theme === 'dark' ? 'vs-dark' : 'light'}
                       value={editedPayload}
                       onChange={(value) => {
-                        console.log('Monaco Editor onChange called, new value length:', value?.length);
                         setEditedPayload(value || '');
                       }}
                       options={{

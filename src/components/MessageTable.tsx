@@ -10,7 +10,7 @@ import { ChevronLeft, ChevronRight, Play, Eye } from 'lucide-react';
 import { format } from 'date-fns';
 import { getShortErrorName } from '../lib/formatters';
 import {useTheme} from "@/components/ThemeProvider.tsx";
-import {getExceptionColor, getGeopostColor, isGeopostException} from "@/lib/utils.ts";
+import { getExceptionColor } from "@/lib/utils.ts";
 import {Message} from "@/types";
 
 const errorTypeColors: Record<string, string> = {

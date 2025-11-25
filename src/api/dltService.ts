@@ -72,6 +72,9 @@ export const DltApiService = (api: AxiosInstance) => ({
     if (filters.errorType) queryParams.errorType = filters.errorType;
     if (filters.search) queryParams.search = filters.search;
     if (filters.searchByKey) queryParams.key = filters.searchByKey;
+    if (filters.searchByValue) queryParams.value = filters.searchByValue;
+    if (filters.headerKey) queryParams.headerKey = filters.headerKey;
+    if (filters.headerValue) queryParams.headerValue = filters.headerValue;
     if (filters.dateFrom) queryParams.dateFrom = filters.dateFrom;
     if (filters.dateTo) queryParams.dateTo = filters.dateTo;
 
@@ -96,9 +99,7 @@ export const DltApiService = (api: AxiosInstance) => ({
 
   // Replay
   replayMessages: async (requests: ReplayRequest[]): Promise<void> => {
-    console.log('API Service - Sending replay requests:', JSON.stringify(requests, null, 2));
     const response = await api.post('/replays', requests);
-    console.log('API Service - Replay response status:', response.status);
     return response.data;
   },
 
